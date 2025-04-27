@@ -1,7 +1,14 @@
-import Home from "@/components/ui/Home";
+import { Fragment } from "react";
+
+import Featured from "@/components/ui/Featured/Featured";
+
+import Home from "@/components/ui/Home/Home";
 
 export default function Page() {
   return (
-    <Home />
+    <Fragment>
+      <Home />
+      <Featured />
+    </Fragment>
   );
 }

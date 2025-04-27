@@ -7,7 +7,6 @@ export const metadata: Metadata = {
     description: "Halaman home untuk super admin",
 }
 
-// This is a server component that wraps the client component
 export default function Page() {
     return (
         <HomeLayout />
