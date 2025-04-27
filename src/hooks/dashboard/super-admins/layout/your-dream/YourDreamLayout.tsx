@@ -14,29 +14,27 @@ import dynamic from 'next/dynamic'
 
 import Image from 'next/image'
 
-import { FeaturedContent } from '@/hooks/dashboard/super-admins/layout/featured/types/Featured'
+import { YourDreamContent } from '@/hooks/dashboard/super-admins/layout/your-dream/types/YourDream'
 
-const ContentModal = dynamic(() => import('@/hooks/dashboard/super-admins/layout/featured/modal/ContentModal').then(mod => mod.ContentModal), {
+const ContentModal = dynamic(() => import('@/hooks/dashboard/super-admins/layout/your-dream/modal/ContentModal').then(mod => mod.ContentModal), {
     ssr: false
 })
 
-const DeleteModal = dynamic(() => import('@/hooks/dashboard/super-admins/layout/featured/modal/DeleteModal').then(mod => mod.DeleteModal), {
+const DeleteModal = dynamic(() => import('@/hooks/dashboard/super-admins/layout/your-dream/modal/DeleteModal').then(mod => mod.DeleteModal), {
     ssr: false
 })
 
-const FeaturedSkelaton = dynamic(() => import('@/hooks/dashboard/super-admins/layout/featured/FeaturedSkelaton').then(mod => mod.default), {
+const YourDreamSkelaton = dynamic(() => import('@/hooks/dashboard/super-admins/layout/your-dream/YourDreamSkelaton').then(mod => mod.default), {
     ssr: false
 })
 
-import { useFeaturedData } from '@/hooks/dashboard/super-admins/layout/featured/lib/FetchFeatured'
+import { useYourDreamData } from '@/hooks/dashboard/super-admins/layout/your-dream/lib/FetchYourDream'
 
 import Empaty from '@/hooks/dashboard/super-admins/layout/featured/components/Empaty';
 
-const initialFormData: FeaturedContent = {
+const initialFormData: YourDreamContent = {
     title: '',
-    text: '',
-    description: [],
-    count: [],
+    description: '',
     imageUrl: [],
 };
 
@@ -49,9 +47,9 @@ export default function FeaturedLayout() {
         createContent,
         handleUpdate,
         handleDelete,
-    } = useFeaturedData();
+    } = useYourDreamData();
 
-    const [formData, setFormData] = useState<FeaturedContent>(initialFormData);
+    const [formData, setFormData] = useState<YourDreamContent>(initialFormData);
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState('');
     const [deleteId, setDeleteId] = useState('');
@@ -124,20 +122,20 @@ export default function FeaturedLayout() {
     }, [formData.imageUrl]);
 
     if (isLoading) {
-        return <FeaturedSkelaton />;
+        return <YourDreamSkelaton />;
     }
 
     return (
         <section>
             <div className="flex justify-between items-center py-4 px-6 border-b border-gray-200 bg-primary-50 rounded-md mb-10" >
                 <div>
-                    <h1 className="text-2xl font-bold">Featured</h1>
+                    <h1 className="text-2xl font-bold">Your Dream</h1>
                     <ul className="flex items-center gap-2">
                         <li className="text-sm font-medium"><Link href="/dashboard/super-admins/super-admin">Dashboard</Link></li>
                         <li className="text-sm font-medium"><IoIosArrowForward className="w-4 h-4" /></li>
                         <li className="text-sm font-medium">Layout</li>
                         <li className="text-sm font-medium"><IoIosArrowForward className="w-4 h-4" /></li>
-                        <li className="text-sm font-medium">Featured</li>
+                        <li className="text-sm font-medium">Your Dream</li>
                     </ul>
                 </div>
 
@@ -168,6 +166,11 @@ export default function FeaturedLayout() {
                             className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100"
                         >
                             <div className="flex flex-col h-full">
+                                <div className="p-6">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{item.description}</p>
+                                </div>
+
                                 {/* Image Section */}
                                 <div className="relative w-full h-auto overflow-hidden">
                                     <div className="flex flex-wrap gap-4 p-4">
@@ -182,32 +185,6 @@ export default function FeaturedLayout() {
                                                 />
                                             </div>
                                         ))}
-                                    </div>
-                                </div>
-
-                                {/* Content Section */}
-                                <div className="p-6 flex-grow space-y-6">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-4">{item.title}</h3>
-                                    <div className="space-y-3">
-                                        {item.description.map((desc, idx) => (
-                                            <div key={idx}>
-                                                <h4 className="text-lg font-bold text-gray-900 mb-2">{desc.title}</h4>
-                                                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{desc.description}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    <div className='grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8'>
-                                        {
-                                            item.count.map((item, index) => {
-                                                return (
-                                                    <div key={index} className="bg-gradient-to-br from-indigo-50 to-white p-6 rounded-xl border border-indigo-100 shadow-sm hover:shadow-md transition-all duration-300">
-                                                        <h3 className="text-indigo-600 text-sm font-medium mb-2">{item.title}</h3>
-                                                        <span className="text-2xl font-bold text-gray-900">+{item.number}</span>
-                                                    </div>
-                                                )
-                                            })
-                                        }
                                     </div>
                                 </div>
 
@@ -252,7 +229,7 @@ export default function FeaturedLayout() {
                 )
             }
 
-            < ContentModal
+            <ContentModal
                 formData={formData}
                 setFormData={setFormData}
                 handleSubmit={handleSubmit}

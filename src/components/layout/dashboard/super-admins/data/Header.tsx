@@ -25,11 +25,6 @@ export const menuItems = [
             },
 
             {
-                label: 'Services',
-                href: '/dashboard/super-admins/layout/services'
-            },
-
-            {
                 label: 'Your Dream',
                 href: '/dashboard/super-admins/layout/your-dream'
             },
@@ -81,9 +76,16 @@ export const menuItems = [
         href: '/dashboard/super-admins/reports',
         icon: HiDocumentReport
     },
+
     {
         label: 'Settings',
         href: '/dashboard/super-admins/settings',
         icon: HiCog
+    },
+
+    {
+        label: 'Home',
+        href: '/',
+        icon: HiHome
     }
 ]; 

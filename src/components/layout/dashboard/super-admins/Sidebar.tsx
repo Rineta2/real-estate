@@ -33,10 +33,13 @@ export default function SuperAdminHeader({ onSidebarToggle }: HeaderProps) {
     };
 
     const isLinkActive = (href: string) => {
+        if (href === '/') {
+            return pathname === '/';
+        }
         if (href === '/dashboard/super-admins') {
             return pathname === href;
         }
-        return pathname.startsWith(href);
+        return pathname === href || pathname.startsWith(href + '/');
     };
 
     const isDropdownActive = (item: MenuItem) => {

@@ -13,7 +13,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export const menu = [
     {
         name: "Login",
-        href: "/login",
+        href: "/signin",
     }
 ]
 
@@ -36,7 +36,7 @@ export const menuHamburger = [
     },
     {
         name: "Login",
-        href: "/login",
+        href: "/signin",
     }
 ]
 
@@ -139,33 +139,46 @@ export default function Header() {
     };
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "backdrop-blur-sm bg-white/10" : "bg-transparent"}`}>
-            <div className="container px-4 md:px-10 py-4 flex justify-between items-center">
+        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white border-b border-gray-100" : "bg-transparent"}`}>
+            <div className="container px-4 md:px-10 py-3 flex justify-between items-center">
                 <button
                     onClick={toggleMenu}
-                    className="flex items-center gap-2 py-2 px-6 rounded-full cursor-pointer hover:bg-white/15 transition-all duration-300 active:scale-95">
-                    <span className="text-white font-medium tracking-wide">Menu</span>
+                    className={`flex items-center gap-2 py-2 px-4 md:px-6 rounded-full cursor-pointer hover:bg-white/15 transition-all duration-300 active:scale-95 bg-white/10 ${scrolled ? "text-black" : "text-white"}`}>
+                    <span className="font-medium tracking-wide text-sm md:text-base">Menu</span>
                     <motion.div
                         animate={isMenuOpen ? { rotate: 90 } : { rotate: 0 }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                         {isMenuOpen ?
-                            <IoClose className="text-white text-xl" /> :
-                            <RxHamburgerMenu className="text-white" />
+                            <IoClose className="text-lg md:text-xl" /> :
+                            <RxHamburgerMenu className="text-lg md:text-xl" />
                         }
                     </motion.div>
                 </button>
 
                 <Link href="/" className="flex justify-center">
-                    <Image src={logo} alt="logo" width={100} height={100} />
+                    <Image
+                        src={logo}
+                        alt="logo"
+                        width={100}
+                        height={100}
+                        className={`object-cover transition-all duration-300 ${scrolled ? "brightness-0" : ""}`}
+                    />
                 </Link>
 
-                <div className="flex items-center gap-4">
-                    {user && (
+                <div className="flex items-center gap-3 md:gap-4">
+                    {user ? (
                         <ProfileMenu
                             isProfileOpen={isProfileOpen}
                             toggleProfile={toggleProfile}
                         />
+                    ) : (
+                        <Link
+                            href="/signin"
+                            className={`py-2 px-4 md:px-6 rounded-full bg-white/10 font-medium hover:bg-teal-400/20 hover:text-teal-400 transition-all duration-300 text-sm md:text-base ${scrolled ? "text-black" : "text-white"}`}
+                        >
+                            Login
+                        </Link>
                     )}
                 </div>
             </div>
@@ -178,7 +191,8 @@ export default function Header() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.4 }}
-                        className="fixed inset-0 bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-md z-40"
+                        className="fixed inset-0 bg-black/95 backdrop-blur-3xl"
+                        style={{ zIndex: 100 }}
                     >
                         {/* Close Button */}
                         <motion.button
@@ -187,22 +201,22 @@ export default function Header() {
                             exit={{ opacity: 0, scale: 0.8 }}
                             transition={{ duration: 0.3 }}
                             onClick={toggleMenu}
-                            className="absolute top-10 right-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-teal-400/20 text-white hover:text-teal-400 transition-all duration-300 z-50"
+                            className="absolute top-6 md:top-10 right-6 md:right-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-teal-400/20 text-white hover:text-teal-400 transition-all duration-300 z-50"
                         >
-                            <IoClose className="text-2xl" />
+                            <IoClose className="text-xl md:text-2xl" />
                         </motion.button>
 
                         <div className="container mx-auto px-4 h-full flex flex-col justify-center">
-                            <div className="grid md:grid-cols-[1fr,auto] gap-10 items-center">
+                            <div className="grid md:grid-cols-[1fr,auto] gap-8 md:gap-10 items-center">
                                 <div>
                                     <motion.nav
                                         variants={menuVariants}
                                         initial="closed"
                                         animate="open"
                                         exit="closed"
-                                        className="py-10"
+                                        className="py-8 md:py-10"
                                     >
-                                        <ul className="flex flex-col gap-8 items-center md:items-start">
+                                        <ul className="flex flex-col gap-6 md:gap-8 items-center md:items-start">
                                             {menuHamburger.map((item) => (
                                                 (item.name === "Login" && user) ? null : (
                                                     <motion.li
@@ -216,12 +230,12 @@ export default function Header() {
                                                             className="block relative overflow-hidden group"
                                                         >
                                                             <motion.span
-                                                                className="flex items-center text-white text-3xl font-medium py-2 transition-all duration-300 ease-in-out transform group-hover:translate-y-[-100%]"
+                                                                className={`flex items-center text-2xl md:text-3xl font-medium py-2 transition-all duration-300 ease-in-out transform group-hover:translate-y-[-100%] ${isMenuOpen ? "text-white" : scrolled ? "text-black" : "text-white"}`}
                                                             >
                                                                 {item.name}
                                                             </motion.span>
                                                             <motion.span
-                                                                className="absolute top-full left-0 flex items-center text-teal-400 text-3xl font-medium py-2 transition-all duration-300 ease-in-out transform group-hover:translate-y-[-100%]"
+                                                                className="absolute top-full left-0 flex items-center text-teal-400 text-2xl md:text-3xl font-medium py-2 transition-all duration-300 ease-in-out transform group-hover:translate-y-[-100%]"
                                                             >
                                                                 {item.name}
                                                             </motion.span>
@@ -229,29 +243,6 @@ export default function Header() {
                                                     </motion.li>
                                                 )
                                             ))}
-                                            {user && (
-                                                <motion.li
-                                                    variants={itemVariants}
-                                                    className="overflow-hidden"
-                                                >
-                                                    <Link
-                                                        href="/dashboard"
-                                                        onClick={handleMenuItemClick}
-                                                        className="block relative overflow-hidden group"
-                                                    >
-                                                        <motion.span
-                                                            className="flex items-center text-white text-3xl font-medium py-2 transition-all duration-300 ease-in-out transform group-hover:translate-y-[-100%]"
-                                                        >
-                                                            Dashboard
-                                                        </motion.span>
-                                                        <motion.span
-                                                            className="absolute top-full left-0 flex items-center text-teal-400 text-3xl font-medium py-2 transition-all duration-300 ease-in-out transform group-hover:translate-y-[-100%]"
-                                                        >
-                                                            Dashboard
-                                                        </motion.span>
-                                                    </Link>
-                                                </motion.li>
-                                            )}
                                         </ul>
                                     </motion.nav>
 
@@ -261,12 +252,12 @@ export default function Header() {
                                         initial="closed"
                                         animate="open"
                                         exit="closed"
-                                        className="mt-16 flex items-center gap-3 md:items-start"
+                                        className="mt-12 md:mt-16 flex items-center gap-3 md:items-start"
                                     >
-                                        <IoLocationOutline className="text-white/70 text-2xl" />
+                                        <IoLocationOutline className="text-white/70 text-xl md:text-2xl" />
                                         <div>
-                                            <h4 className="text-white/90 font-medium">Visit Us</h4>
-                                            <p className="text-white/70 text-sm mt-1">123 Business Avenue, Suite 500<br />New York, NY 10001</p>
+                                            <h4 className="text-white/90 font-medium text-sm md:text-base">Visit Us</h4>
+                                            <p className="text-white/70 text-xs md:text-sm mt-1">123 Business Avenue, Suite 500<br />New York, NY 10001</p>
                                         </div>
                                     </motion.div>
                                 </div>
@@ -318,7 +309,7 @@ export default function Header() {
                             </div>
 
                             <div className="absolute bottom-5 left-0 right-0 flex justify-center items-center">
-                                <p className="text-white/40 text-sm">© 2024 Real Estate</p>
+                                <p className="text-white/40 text-xs md:text-sm">© 2024 Real Estate</p>
                             </div>
                         </div>
                     </motion.div>

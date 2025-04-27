@@ -52,7 +52,7 @@ export default function Home() {
             </div>
 
             {/* Content */}
-            <div className="relative flex flex-col items-center justify-center pt-40 px-4 sm:px-6 md:px-10 h-full">
+            <div className="relative flex flex-col items-center justify-center pt-48 px-4 sm:px-6 md:px-10 h-full">
                 <div className="container mx-auto text-center">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
