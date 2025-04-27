@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 import { FetchFeatured } from '@/components/ui/Featured/utils/FetchFeatured'
 
-import { FeaturedType } from '@/components/ui/Featured/types/Home'
+import { FeaturedType } from '@/components/ui/Featured/types/Featured'
 
 import FeaturedSkelaton from '@/components/ui/Featured/FeaturedSkelaton'
 
@@ -55,7 +55,7 @@ export default function Featured() {
     const description = featured.length > 0 ? featured[0].description : [];
 
     return (
-        <section className='py-16 md:py-20 lg:py-24 bg-neutral-50' id='about'>
+        <section className='py-16 md:py-20 lg:py-24 bg-neutral-50' id='features'>
             <div className='container mx-auto px-4 md:px-8 lg:px-14'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8 sm:mb-12 md:mb-16'>
                     <motion.div

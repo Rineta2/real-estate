@@ -1,6 +1,12 @@
-import { HiHome, HiUsers, HiOfficeBuilding, HiDocumentReport, HiCog } from 'react-icons/hi';
+import { HiHome, HiUsers, HiOfficeBuilding, HiCog } from 'react-icons/hi';
 
 import { LuLayoutDashboard } from "react-icons/lu";
+
+import { RiPagesFill } from "react-icons/ri";
+
+import { GrGallery } from "react-icons/gr";
+
+import { GrArticle } from "react-icons/gr";
 
 export const menuItems = [
     {
@@ -37,6 +43,67 @@ export const menuItems = [
     },
 
     {
+        label: 'Pages',
+        href: '/dashboard/super-admins/pages',
+        icon: RiPagesFill,
+        subItems: [
+            {
+                label: 'About',
+                href: '/dashboard/super-admins/pages/about'
+            },
+
+            {
+                label: 'Contact',
+                href: '/dashboard/super-admins/pages/contact'
+            },
+        ]
+    },
+
+    {
+        label: 'Properties',
+        href: '/dashboard/super-admins/properties',
+        icon: HiOfficeBuilding,
+        subItems: [
+            {
+                label: 'All Properties',
+                href: '/dashboard/super-admins/properties'
+            },
+
+            {
+                label: 'Add Property',
+                href: '/dashboard/super-admins/properties/add'
+            },
+
+            {
+                label: 'Categories',
+                href: '/dashboard/super-admins/properties/categories'
+            }
+        ]
+    },
+
+    {
+        label: 'Gallery',
+        href: '/dashboard/super-admins/gallery',
+        icon: GrGallery
+    },
+
+    {
+        label: 'Blog',
+        href: '/dashboard/super-admins/blog',
+        icon: GrArticle,
+        subItems: [
+            {
+                label: 'All Blog',
+                href: '/dashboard/super-admins/blog'
+            },
+            {
+                label: 'Categories',
+                href: '/dashboard/super-admins/blog/categories'
+            }
+        ]
+    },
+
+    {
         label: 'Users',
         href: '/dashboard/super-admins/users',
         icon: HiUsers,
@@ -50,31 +117,6 @@ export const menuItems = [
                 href: '/dashboard/super-admins/users/add'
             }
         ]
-    },
-
-    {
-        label: 'Properties',
-        href: '/dashboard/super-admins/properties',
-        icon: HiOfficeBuilding,
-        subItems: [
-            {
-                label: 'All Properties',
-                href: '/dashboard/super-admins/properties'
-            },
-            {
-                label: 'Add Property',
-                href: '/dashboard/super-admins/properties/add'
-            },
-            {
-                label: 'Categories',
-                href: '/dashboard/super-admins/properties/categories'
-            }
-        ]
-    },
-    {
-        label: 'Reports',
-        href: '/dashboard/super-admins/reports',
-        icon: HiDocumentReport
     },
 
     {

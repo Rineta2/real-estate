@@ -2,7 +2,7 @@ import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 import { db } from "@/utils/firebase/firebase";
 
-import { FeaturedType } from "@/components/ui/Featured/types/Home";
+import { FeaturedType } from "@/components/ui/Featured/types/Featured";
 
 export function FetchFeatured(callback: (featured: FeaturedType[]) => void) {
   const q = query(

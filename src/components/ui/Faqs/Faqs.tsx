@@ -43,7 +43,7 @@ export default function Faqs() {
     const faqs = content.length > 0 ? content[0].faqs : [];
 
     return (
-        <section className='py-10 md:py-14 lg:py-20 bg-neutral-50'>
+        <section className='py-10 md:py-14 lg:py-20 bg-neutral-50' id='faqs'>
             <div className='container mx-auto px-4 md:px-8 lg:px-14'>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12'>
                     <motion.div

@@ -27,6 +27,7 @@ const HomeSkelaton = dynamic(() => import('@/hooks/dashboard/super-admins/layout
 import { useFaqsData } from '@/hooks/dashboard/super-admins/layout/faqs/lib/FetchFaqs'
 
 import { FaPlus } from 'react-icons/fa'
+
 import Empaty from '../featured/components/Empaty'
 
 const initialFormData: FaqsContent = {

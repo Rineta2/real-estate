@@ -1,13 +1,23 @@
 import Image from "next/image";
+
 import Link from "next/link";
+
 import logo from "@/base/assets/Logo.png"
+
 import { RxHamburgerMenu } from "react-icons/rx";
+
 import { IoClose } from "react-icons/io5";
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaLinkedinIn, FaPinterestP } from "react-icons/fa";
+
+import { FaFacebookF, FaTwitter, FaInstagram, FaTiktok, FaLinkedinIn, FaPinterestP } from "react-icons/fa";
+
 import { IoLocationOutline } from "react-icons/io5";
+
 import React, { useEffect, useState } from "react";
+
 import { useAuth } from "@/utils/context/AuthContext";
+
 import ProfileMenu from "./ProfileMenu";
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const menu = [
@@ -24,26 +34,29 @@ export const menuHamburger = [
     },
     {
         name: "About",
-        href: "#about",
+        href: "/about",
     },
+
     {
-        name: "Faqs",
-        href: "#faqs",
+        name: "Gallery",
+        href: "/gallery",
     },
+
+    {
+        name: "Blog",
+        href: "/blog",
+    },
+
     {
         name: "Contact",
-        href: "#contact",
+        href: "/contact",
     },
-    {
-        name: "Login",
-        href: "/signin",
-    }
 ]
 
 export const socialMedia = [
     {
         icon: FaFacebookF,
-        href: "https://facebook.com",
+        href: "https://www.facebook.com/profile.php?id=61573748215102&mibextid=ZbWKwL",
     },
     {
         icon: FaTwitter,
@@ -51,11 +64,11 @@ export const socialMedia = [
     },
     {
         icon: FaInstagram,
-        href: "https://instagram.com",
+        href: "https://www.instagram.com/spacedigitalia/?igsh=MWhucmN5bXl1YnViZQ%3D%3D#",
     },
     {
-        icon: FaYoutube,
-        href: "https://youtube.com",
+        icon: FaTiktok,
+        href: "https://www.tiktok.com/@spacedigitalia?_t=ZS-8uKNO1JcPod&_r=1",
     },
     {
         icon: FaLinkedinIn,
@@ -206,7 +219,7 @@ export default function Header() {
                             <IoClose className="text-xl md:text-2xl" />
                         </motion.button>
 
-                        <div className="container mx-auto px-4 h-full flex flex-col justify-center">
+                        <div className="container mx-auto px-4 md:px-10 h-full flex flex-col justify-center">
                             <div className="grid md:grid-cols-[1fr,auto] gap-8 md:gap-10 items-center">
                                 <div>
                                     <motion.nav
@@ -309,7 +322,7 @@ export default function Header() {
                             </div>
 
                             <div className="absolute bottom-5 left-0 right-0 flex justify-center items-center">
-                                <p className="text-white/40 text-xs md:text-sm">© 2024 Real Estate</p>
+                                <p className="text-white/40 text-xs md:text-sm">© 2025 <a href="https://spacedigitalia.my.id" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white/60 transition-all duration-300">Space Digitalia</a></p>
                             </div>
                         </div>
                     </motion.div>

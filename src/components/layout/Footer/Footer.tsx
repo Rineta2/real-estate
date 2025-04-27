@@ -24,11 +24,11 @@ export default function Footer() {
                         <div>
                             <h3 className="font-semibold text-gray-900 mb-3">Company</h3>
                             <ul className="space-y-2">
-                                <li><Link href="#about" className="text-gray-600 hover:text-gray-900 text-sm">About us</Link></li>
+                                <li><Link href="/" className="text-gray-600 hover:text-gray-900 text-sm">Home</Link></li>
+                                <li><Link href="/about" className="text-gray-600 hover:text-gray-900 text-sm">About</Link></li>
+                                <li><Link href="/gallery" className="text-gray-600 hover:text-gray-900 text-sm">Gallery</Link></li>
                                 <li><Link href="/blog" className="text-gray-600 hover:text-gray-900 text-sm">Blog</Link></li>
-                                <li><Link href="/careers" className="text-gray-600 hover:text-gray-900 text-sm">Careers</Link></li>
-                                <li><Link href="/customers" className="text-gray-600 hover:text-gray-900 text-sm">Customers</Link></li>
-                                <li><Link href="/brand" className="text-gray-600 hover:text-gray-900 text-sm">Brand</Link></li>
+                                <li><Link href="/contact" className="text-gray-600 hover:text-gray-900 text-sm">Contact</Link></li>
                             </ul>
                         </div>
 
