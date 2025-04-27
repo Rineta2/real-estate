@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import SignInLayout from "@/hooks/pages/signin/SigninLayout"
+import SignInLayout from "@/hooks/pages/(auth)/signin/SigninLayout"
 
 export const metadata: Metadata = {
     title: "Sign In | Real Estate",

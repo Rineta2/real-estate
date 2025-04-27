@@ -86,6 +86,7 @@ export const useGallery = () => {
       if (!formData.image) return;
 
       const imageUrl = await handleImageUpload(formData.image);
+      const timestamp = new Date().toISOString();
 
       if (editingItem) {
         await updateDoc(
@@ -96,6 +97,7 @@ export const useGallery = () => {
           ),
           {
             imageUrl,
+            updatedAt: timestamp,
           }
         );
         toast.success("Gambar berhasil diperbarui");
@@ -104,6 +106,8 @@ export const useGallery = () => {
           collection(db, process.env.NEXT_PUBLIC_COLLECTIONS_GALLERY as string),
           {
             imageUrl,
+            createdAt: timestamp,
+            updatedAt: timestamp,
           }
         );
         toast.success("Gambar berhasil ditambahkan");

@@ -6,8 +6,9 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onDelete, isSu
     if (!isOpen) return null;
 
     return (
-        <dialog id="delete_modal" className="modal">
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100]">
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+            <div className="fixed inset-0 flex items-center justify-center p-4">
                 <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Confirm Delete</h3>
                     <p className="text-gray-600 mb-6">
@@ -30,6 +31,6 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onDelete, isSu
                     </div>
                 </div>
             </div>
-        </dialog>
+        </div>
     );
 };

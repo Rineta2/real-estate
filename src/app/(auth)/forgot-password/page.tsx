@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import ForgotPasswordLayout from "@/hooks/pages/forgot-password/ForgotPasswordLayout"
+import ForgotPasswordLayout from "@/hooks/pages/(auth)/forgot-password/ForgotPasswordLayout"
 
 export const metadata: Metadata = {
     title: "Forgot Password | Real Estate",
