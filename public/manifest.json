@@ -1,51 +1,51 @@
 {
-    "short_name": "Real Estate | Temukan Properti Impian Anda",
-    "name": "Real Estate!",
-    "icons": [
-        {
-            "src": "/favicon.ico",
-            "sizes": "64x64 32x32 24x24 16x16",
-            "type": "image/x-icon"
-        },
-        {
-            "src": "/favicon.png",
-            "type": "image/png",
-            "sizes": "192x192"
-        },
-        {
-            "src": "/icons.png",
-            "type": "image/png",
-            "sizes": "512x512"
-        }
-    ],
-    "start_url": "/",
-    "display": "standalone",
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "prefer_related_applications": false,
-    "categories": [
-        "real estate",
-        "real estate indonesia",
-        "real estate jakarta",
-        "real estate surabaya",
-        "real estate bandung",
-        "real estate semarang",
-        "real estate medan",
-        "real estate bali",
-        "real estate jakarta",
-        "real estate surabaya",
-        "real estate bandung",
-        "real estate semarang",
-        "real estate medan",
-        "real estate bali",
-        "space digitalia"
-    ],
-    "screenshots": [
-        {
-            "src": "/home.png",
-            "sizes": "1280x720",
-            "type": "image/png"
-        }
-    ],
-    "description": "Real Estate menyediakan layanan jual beli properti terlengkap di Indonesia. Kami menangani berbagai masalah properti dengan teknisi berpengalaman dan harga terjangkau"
+  "short_name": "Real Estate | Temukan Properti Impian Anda",
+  "name": "Real Estate!",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "prefer_related_applications": false,
+  "categories": [
+    "real estate",
+    "real estate indonesia",
+    "real estate jakarta",
+    "real estate surabaya",
+    "real estate bandung",
+    "real estate semarang",
+    "real estate medan",
+    "real estate bali",
+    "real estate jakarta",
+    "real estate surabaya",
+    "real estate bandung",
+    "real estate semarang",
+    "real estate medan",
+    "real estate bali",
+    "space digitalia"
+  ],
+  "screenshots": [
+    {
+      "src": "/home.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ],
+  "description": "Real Estate menyediakan layanan jual beli properti terlengkap di Indonesia. Kami menangani berbagai masalah properti dengan teknisi berpengalaman dan harga terjangkau"
 }

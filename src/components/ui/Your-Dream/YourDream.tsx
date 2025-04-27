@@ -28,7 +28,6 @@ export default function YourDream() {
         return <YourDreamSkelaton />;
     }
 
-
     const title = yourDream.length > 0 ? yourDream[0].title : '';
     const description = yourDream.length > 0 ? yourDream[0].description : '';
     const imageUrl = yourDream.length > 0 ? yourDream[0].imageUrl : [];
@@ -68,7 +67,7 @@ export default function YourDream() {
 
                         {imageUrl.length > 2 && (
                             <motion.div
-                                className='relative rounded-xl sm:rounded-2xl overflow-hidden h-[250px] sm:h-[300px] md:h-[400px] lg:h-[500px] group cursor-pointer hidden sm:block'
+                                className='relative rounded-xl sm:rounded-2xl overflow-hidden h-[250px] sm:h-[300px] md:h-[400px] lg:h-[700px] group cursor-pointer hidden sm:block'
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
@@ -86,7 +85,7 @@ export default function YourDream() {
                     </motion.div>
 
                     <motion.div
-                        className='grid grid-cols-2 xl:grid-cols-1 h-auto md:h-[600px] lg:h-[700px] gap-4'
+                        className='grid grid-cols-2 md:grid-cols-1 h-auto md:h-[600px] lg:h-[700px] gap-4'
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
