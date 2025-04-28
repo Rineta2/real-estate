@@ -19,6 +19,7 @@ export default function GalleryLayout() {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(0);
     const [selectedImage, setSelectedImage] = useState<GalleryType | null>(null);
+    const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
     useEffect(() => {
         const unsubscribe = FetchGallery((newGallery) => {
@@ -46,6 +47,10 @@ export default function GalleryLayout() {
         setCurrentPage(selectedItem.selected);
     };
 
+    const handleImageError = (imageUrl: string) => {
+        setImageErrors(prev => ({ ...prev, [imageUrl]: true }));
+    };
+
     const totalPages = Math.ceil(gallery.length / ITEMS_PER_PAGE);
     const startIndex = currentPage * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -66,15 +71,23 @@ export default function GalleryLayout() {
                                 className="mb-2 sm:mb-3 md:mb-4 break-inside-avoid rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
                                 onClick={() => setSelectedImage(item)}
                             >
-                                <Image
-                                    src={item.imageUrl}
-                                    alt='image'
-                                    quality={100}
-                                    width={400}
-                                    height={300}
-                                    loading='lazy'
-                                    className="w-full h-auto object-cover"
-                                />
+                                {imageErrors[item.imageUrl] ? (
+                                    <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center">
+                                        <span className="text-gray-500">Image not available</span>
+                                    </div>
+                                ) : (
+                                    <Image
+                                        src={item.imageUrl}
+                                        alt='image'
+                                        quality={75}
+                                        width={400}
+                                        height={300}
+                                        loading='lazy'
+                                        className="w-full h-auto object-cover"
+                                        onError={() => handleImageError(item.imageUrl)}
+                                        unoptimized={true}
+                                    />
+                                )}
                             </div>
                         ))
                     }
@@ -103,13 +116,21 @@ export default function GalleryLayout() {
                         </button>
                         {/* Main Preview */}
                         <div className="flex-1 flex items-center justify-center h-[70vh] md:h-full w-full max-w-[100vw] max-h-[90vh] relative bg-black">
-                            <Image
-                                src={selectedImage.imageUrl}
-                                alt="Preview"
-                                fill
-                                className="object-contain"
-                                priority
-                            />
+                            {imageErrors[selectedImage.imageUrl] ? (
+                                <div className="w-full h-full flex items-center justify-center">
+                                    <span className="text-white">Image not available</span>
+                                </div>
+                            ) : (
+                                <Image
+                                    src={selectedImage.imageUrl}
+                                    alt="Preview"
+                                    fill
+                                    className="object-contain"
+                                    priority
+                                    onError={() => handleImageError(selectedImage.imageUrl)}
+                                    unoptimized={true}
+                                />
+                            )}
                         </div>
                         {/* Right Side List */}
                         <div className="w-full md:w-80 lg:w-96 h-32 sm:h-40 md:h-full overflow-y-auto bg-black bg-opacity-50 p-2 flex-shrink-0">
@@ -127,13 +148,21 @@ export default function GalleryLayout() {
                                         }}
                                     >
                                         <div className="relative w-full aspect-square">
-                                            <Image
-                                                src={item.imageUrl}
-                                                alt="thumbnail"
-                                                fill
-                                                className="object-cover"
-                                                sizes="(max-width: 640px) 25vw, (max-width: 768px) 16vw, 12vw"
-                                            />
+                                            {imageErrors[item.imageUrl] ? (
+                                                <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                                                    <span className="text-gray-400 text-xs">N/A</span>
+                                                </div>
+                                            ) : (
+                                                <Image
+                                                    src={item.imageUrl}
+                                                    alt="thumbnail"
+                                                    fill
+                                                    className="object-cover"
+                                                    sizes="(max-width: 640px) 25vw, (max-width: 768px) 16vw, 12vw"
+                                                    onError={() => handleImageError(item.imageUrl)}
+                                                    unoptimized={true}
+                                                />
+                                            )}
                                         </div>
                                     </div>
                                 ))}
