@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import AboutLayout from "@/hooks/dashboard/super-admins/pages/about/AboutLayout";
+import AboutLayout from "@/hooks/dashboard/super-admins/about/TopAbout/AboutTopLayout";
 
 export const metadata: Metadata = {
     title: "About | Real Estate",

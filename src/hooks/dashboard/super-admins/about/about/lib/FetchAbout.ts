@@ -17,7 +17,7 @@ import { db } from "@/utils/firebase/firebase";
 
 import imagekitInstance from "@/utils/imagekit/imagekit";
 
-import { AboutContent } from "@/hooks/dashboard/super-admins/pages/about/types/About";
+import { AboutContent } from "@/hooks/dashboard/super-admins/about/about/types/About";
 
 // Cache untuk menyimpan hasil fetch
 let contentCache: AboutContent[] | null = null;

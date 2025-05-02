@@ -2,7 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import { ContentModalProps } from '@/hooks/dashboard/super-admins/pages/about/types/About';
+import { ContentModalProps } from '@/hooks/dashboard/super-admins/about/CardAbout/types/CardAbout';
 
 export const ContentModal: React.FC<ContentModalProps> = ({
     formData,
@@ -52,7 +52,7 @@ export const ContentModal: React.FC<ContentModalProps> = ({
                                             />
                                         </div>
 
-                                        {/* Description */}
+                                        {/* Description Input */}
                                         <div className="space-y-2">
                                             <label htmlFor="description" className="text-sm font-medium text-gray-700">Description</label>
                                             <textarea
@@ -60,78 +60,8 @@ export const ContentModal: React.FC<ContentModalProps> = ({
                                                 value={formData.description}
                                                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                                 className="w-full px-4 py-2 border border-[var(--border-color)] rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-transparent resize-none"
-                                                rows={4}
                                                 required
                                             />
-                                        </div>
-                                    </div>
-
-                                    {/* Typing Text Section */}
-                                    <div className='bg-gray-50/50 p-6 rounded-2xl space-y-6 border border-[var(--border-color)]'>
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <div className="p-2 bg-indigo-100 rounded-lg">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </div>
-                                            <h4 className="font-semibold text-gray-900">Typing Text</h4>
-                                        </div>
-                                        <div className="space-y-4">
-                                            {formData.text.map((item, index) => (
-                                                <div key={index} className="space-y-2">
-                                                    <div className="flex gap-2">
-                                                        <input
-                                                            type="text"
-                                                            value={item.title}
-                                                            onChange={(e) => {
-                                                                const newTyping = [...formData.text];
-                                                                newTyping[index] = { ...newTyping[index], title: e.target.value };
-                                                                setFormData({ ...formData, text: newTyping });
-                                                            }}
-                                                            className="flex-1 px-4 py-2 border border-[var(--border-color)] rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-transparent"
-                                                            placeholder="Type title"
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                const newTyping = formData.text.filter((_, i) => i !== index);
-                                                                setFormData({ ...formData, text: newTyping });
-                                                            }}
-                                                            className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg"
-                                                        >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                    <textarea
-                                                        value={item.description}
-                                                        onChange={(e) => {
-                                                            const newTyping = [...formData.text];
-                                                            newTyping[index] = { ...newTyping[index], description: e.target.value };
-                                                            setFormData({ ...formData, text: newTyping });
-                                                        }}
-                                                        className="w-full px-4 py-2 border border-[var(--border-color)] rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-transparent resize-none"
-                                                        placeholder="Type description"
-                                                        rows={2}
-                                                    />
-                                                </div>
-                                            ))}
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    setFormData({
-                                                        ...formData,
-                                                        text: [...formData.text, { title: '', description: '' }]
-                                                    });
-                                                }}
-                                                className="w-full px-4 py-2 text-indigo-600 hover:bg-indigo-50 rounded-lg border border-indigo-200 flex items-center justify-center gap-2"
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                                                </svg>
-                                                Add Typing Text
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
