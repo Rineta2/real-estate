@@ -43,22 +43,22 @@ export default function Faqs() {
     const faqs = content.length > 0 ? content[0].faqs : [];
 
     return (
-        <section className='py-10 md:py-14 lg:py-20 bg-neutral-50' id='faqs'>
-            <div className='container mx-auto px-4 md:px-8 lg:px-14'>
-                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12'>
+        <section className='py-8 sm:py-10 md:py-14 lg:py-28 bg-neutral-50 overflow-hidden' id='faqs'>
+            <div className='container mx-auto px-4 sm:px-6 md:px-8 lg:px-14'>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12'>
                     <motion.div
-                        className='flex flex-col space-y-3 sm:space-y-4'
+                        className='flex flex-col space-y-2 sm:space-y-3 md:space-y-4'
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                     >
-                        <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>{title}</h1>
-                        <p className='text-sm sm:text-base md:text-lg text-gray-600'>{description}</p>
+                        <h1 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold'>{title}</h1>
+                        <p className='text-xs sm:text-sm md:text-base lg:text-lg text-gray-600'>{description}</p>
                     </motion.div>
 
                     <motion.div
-                        className='space-y-3 sm:space-y-4'
+                        className='space-y-2 sm:space-y-3 md:space-y-4'
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
@@ -69,7 +69,7 @@ export default function Faqs() {
                             return (
                                 <motion.div
                                     key={idx}
-                                    className='border rounded-lg p-3 sm:p-4 cursor-pointer hover:bg-gray-50 transition-colors'
+                                    className='border rounded-lg p-2 sm:p-3 md:p-4 cursor-pointer hover:bg-gray-50 transition-colors'
                                     onClick={() => toggleFaq(idx)}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -77,12 +77,12 @@ export default function Faqs() {
                                     transition={{ duration: 0.3, delay: idx * 0.1 }}
                                 >
                                     <div className='flex justify-between items-center'>
-                                        <h3 className='font-semibold capitalize text-lg md:text-xl'>{item.title}</h3>
+                                        <h3 className='font-semibold capitalize text-base sm:text-lg md:text-xl'>{item.title}</h3>
                                         <motion.div
                                             animate={{ rotate: isExpanded ? 45 : 0 }}
                                             transition={{ duration: 0.3 }}
                                         >
-                                            <FaPlus size={18} />
+                                            <FaPlus className='w-4 h-4 sm:w-5 sm:h-5' />
                                         </motion.div>
                                     </div>
                                     <motion.div
@@ -91,7 +91,7 @@ export default function Faqs() {
                                         animate={{ opacity: isExpanded ? 1 : 0 }}
                                         transition={{ duration: 0.3 }}
                                     >
-                                        <p className='text-sm mt-2 text-gray-600'>{item.description}</p>
+                                        <p className='text-xs sm:text-sm md:text-base mt-2 text-gray-600'>{item.description}</p>
                                     </motion.div>
                                 </motion.div>
                             )

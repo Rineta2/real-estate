@@ -1,6 +1,6 @@
 import { metadata } from "@/base/meta/meta";
 
-import "./globals.css";
+import "@/base/style/globals.css";
 
 import { ThemeModeScript } from "flowbite-react";
 
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="id" suppressHydrationWarning>
       <head>
         <ThemeModeScript />
       </head>
