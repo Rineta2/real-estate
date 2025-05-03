@@ -37,3 +37,8 @@ export interface BlogCardProps {
 export interface TopBlogProps {
   blog: BlogType;
 }
+
+export interface RelatedBlogProps {
+  relatedBlog: BlogType[];
+  currentSlug: string;
+}
