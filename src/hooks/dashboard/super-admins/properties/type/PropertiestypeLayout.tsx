@@ -12,21 +12,21 @@ import { Timestamp } from 'firebase/firestore';
 
 import { format } from 'date-fns';
 
-import { useBlogCategoryData } from '@/hooks/dashboard/super-admins/blog/categories/lib/FetchCategories';
+import { usePropertiesTypeData } from '@/hooks/dashboard/super-admins/properties/type/lib/FetchType';
 
-import { ContentModal } from '@/hooks/dashboard/super-admins/blog/categories/modal/ContentModal';
+import { ContentModal } from '@/hooks/dashboard/super-admins/properties/type/modal/ContentModal';
 
-import { DeleteModal } from '@/hooks/dashboard/super-admins/blog/categories/modal/DeleteModal';
+import { DeleteModal } from '@/hooks/dashboard/super-admins/properties/type/modal/DeleteModal';
 
-import CategoriesSkelaton from '@/hooks/dashboard/super-admins/blog/categories/CategoriesSkelaton';
+import PropertiesTypeSkelaton from '@/hooks/dashboard/super-admins/properties/type/PropertiesTypeSkelaton';
 
-import { BlogCategoryFormData, initialFormData } from '@/hooks/dashboard/super-admins/blog/categories/types/schema';
+import { PropertiesTypeFormData, initialFormData } from '@/hooks/dashboard/super-admins/properties/type/types/schema';
 
 import { Pagination } from '@/base/helper/Pagination';
 
 import { Table, TableHead, TableHeadCell, TableBody, TableRow, TableCell } from 'flowbite-react';
 
-export default function CategoriesLayout() {
+export default function PropertiesTypeLayout() {
     const {
         isLoading,
         contents,
@@ -38,9 +38,9 @@ export default function CategoriesLayout() {
         currentPage,
         totalItems,
         itemsPerPage,
-    } = useBlogCategoryData();
+    } = usePropertiesTypeData();
 
-    const [formData, setFormData] = useState<BlogCategoryFormData>(initialFormData);
+    const [formData, setFormData] = useState<PropertiesTypeFormData>(initialFormData);
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -102,18 +102,19 @@ export default function CategoriesLayout() {
     };
 
     if (isInitialLoading) {
-        return <CategoriesSkelaton />;
+        return <PropertiesTypeSkelaton />;
     }
-
     return (
         <section>
             <div className="flex justify-between items-center py-4 px-6 border-b border-gray-200 bg-primary-50 rounded-md mb-10">
                 <div>
-                    <h1 className="text-2xl font-bold">Categories</h1>
+                    <h1 className="text-2xl font-bold">Type</h1>
                     <ul className="flex items-center gap-2">
                         <li className="text-sm font-medium"><Link href="/dashboard/super-admins/super-admin">Dashboard</Link></li>
                         <li className="text-sm font-medium"><IoIosArrowForward className="w-4 h-4" /></li>
-                        <li className="text-sm font-medium">Categories</li>
+                        <li className="text-sm font-medium">Properties</li>
+                        <li className="text-sm font-medium"><IoIosArrowForward className="w-4 h-4" /></li>
+                        <li className="text-sm font-medium">Type</li>
                     </ul>
                 </div>
 
@@ -132,7 +133,7 @@ export default function CategoriesLayout() {
             </div>
 
             {isLoading ? (
-                <CategoriesSkelaton />
+                <PropertiesTypeSkelaton />
             ) : (
                 <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
                     <Table hoverable>
@@ -148,9 +149,9 @@ export default function CategoriesLayout() {
                             {contents.map((content, index) => (
                                 <TableRow key={content.id} className="bg-white hover:bg-gray-50">
                                     <TableCell className="whitespace-nowrap font-medium text-gray-900">
-                                        {index + 1}
+                                        {currentPage * itemsPerPage + index + 1}
                                     </TableCell>
-                                    <TableCell className="whitespace-nowrap font-medium text-gray-900">
+                                    <TableCell className="whitespace-nowrap font-medium text-gray-900 capitalize">
                                         {content.title}
                                     </TableCell>
                                     <TableCell className="whitespace-nowrap text-gray-500">

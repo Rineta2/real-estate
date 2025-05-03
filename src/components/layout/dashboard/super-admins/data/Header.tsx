@@ -90,17 +90,17 @@ export const menuItems = [
     subItems: [
       {
         label: "All Properties",
-        href: "/dashboard/super-admins/properties",
+        href: "/dashboard/super-admins/properties/properties",
       },
 
       {
-        label: "Add Property",
-        href: "/dashboard/super-admins/properties/add",
+        label: "Type",
+        href: "/dashboard/super-admins/properties/type",
       },
 
       {
-        label: "Categories",
-        href: "/dashboard/super-admins/properties/categories",
+        label: "Locations",
+        href: "/dashboard/super-admins/properties/locations",
       },
     ],
   },
@@ -118,7 +118,7 @@ export const menuItems = [
     subItems: [
       {
         label: "All Blog",
-        href: "/dashboard/super-admins/blog",
+        href: "/dashboard/super-admins/blog/blog",
       },
       {
         label: "Categories",

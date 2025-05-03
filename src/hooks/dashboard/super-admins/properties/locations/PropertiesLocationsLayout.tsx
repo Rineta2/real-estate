@@ -12,21 +12,21 @@ import { Timestamp } from 'firebase/firestore';
 
 import { format } from 'date-fns';
 
-import { useBlogCategoryData } from '@/hooks/dashboard/super-admins/blog/categories/lib/FetchCategories';
+import { usePropertiesLocationsData } from '@/hooks/dashboard/super-admins/properties/locations/lib/FetchLocations';
 
-import { ContentModal } from '@/hooks/dashboard/super-admins/blog/categories/modal/ContentModal';
+import { ContentModal } from '@/hooks/dashboard/super-admins/properties/locations/modal/ContentModal';
 
-import { DeleteModal } from '@/hooks/dashboard/super-admins/blog/categories/modal/DeleteModal';
+import { DeleteModal } from '@/hooks/dashboard/super-admins/properties/locations/modal/DeleteModal';
 
-import CategoriesSkelaton from '@/hooks/dashboard/super-admins/blog/categories/CategoriesSkelaton';
+import PropertiesLocationsSkelaton from '@/hooks/dashboard/super-admins/properties/locations/PropertiesLocationsSkelaton';
 
-import { BlogCategoryFormData, initialFormData } from '@/hooks/dashboard/super-admins/blog/categories/types/schema';
+import { PropertiesLocationsFormData, initialFormData } from '@/hooks/dashboard/super-admins/properties/locations/types/schema';
 
 import { Pagination } from '@/base/helper/Pagination';
 
 import { Table, TableHead, TableHeadCell, TableBody, TableRow, TableCell } from 'flowbite-react';
 
-export default function CategoriesLayout() {
+export default function PropertiesTypeLayout() {
     const {
         isLoading,
         contents,
@@ -38,9 +38,10 @@ export default function CategoriesLayout() {
         currentPage,
         totalItems,
         itemsPerPage,
-    } = useBlogCategoryData();
+        isDeleting,
+    } = usePropertiesLocationsData();
 
-    const [formData, setFormData] = useState<BlogCategoryFormData>(initialFormData);
+    const [formData, setFormData] = useState<PropertiesLocationsFormData>(initialFormData);
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -102,18 +103,19 @@ export default function CategoriesLayout() {
     };
 
     if (isInitialLoading) {
-        return <CategoriesSkelaton />;
+        return <PropertiesLocationsSkelaton />;
     }
-
     return (
         <section>
             <div className="flex justify-between items-center py-4 px-6 border-b border-gray-200 bg-primary-50 rounded-md mb-10">
                 <div>
-                    <h1 className="text-2xl font-bold">Categories</h1>
+                    <h1 className="text-2xl font-bold">Properties Locations</h1>
                     <ul className="flex items-center gap-2">
                         <li className="text-sm font-medium"><Link href="/dashboard/super-admins/super-admin">Dashboard</Link></li>
                         <li className="text-sm font-medium"><IoIosArrowForward className="w-4 h-4" /></li>
-                        <li className="text-sm font-medium">Categories</li>
+                        <li className="text-sm font-medium"><Link href={"/dashboard/super-admin/properties/properties"}>Properties</Link></li>
+                        <li className="text-sm font-medium"><IoIosArrowForward className="w-4 h-4" /></li>
+                        <li className="text-sm font-medium">Locations</li>
                     </ul>
                 </div>
 
@@ -132,14 +134,15 @@ export default function CategoriesLayout() {
             </div>
 
             {isLoading ? (
-                <CategoriesSkelaton />
+                <PropertiesLocationsSkelaton />
             ) : (
                 <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
                     <Table hoverable>
                         <TableHead>
                             <TableRow>
                                 <TableHeadCell>No</TableHeadCell>
-                                <TableHeadCell>Title</TableHeadCell>
+                                <TableHeadCell>Province</TableHeadCell>
+                                <TableHeadCell>Cities</TableHeadCell>
                                 <TableHeadCell>Created At</TableHeadCell>
                                 <TableHeadCell>Actions</TableHeadCell>
                             </TableRow>
@@ -148,10 +151,17 @@ export default function CategoriesLayout() {
                             {contents.map((content, index) => (
                                 <TableRow key={content.id} className="bg-white hover:bg-gray-50">
                                     <TableCell className="whitespace-nowrap font-medium text-gray-900">
-                                        {index + 1}
+                                        {currentPage * itemsPerPage + index + 1}
                                     </TableCell>
-                                    <TableCell className="whitespace-nowrap font-medium text-gray-900">
-                                        {content.title}
+                                    <TableCell className="whitespace-nowrap font-medium text-gray-900 capitalize">
+                                        {content.province}
+                                    </TableCell>
+                                    <TableCell className="whitespace-nowrap text-gray-500">
+                                        {content.city.map((cityItem, cityIndex) => (
+                                            <span key={cityIndex} className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                                                {cityItem.city}
+                                            </span>
+                                        ))}
                                     </TableCell>
                                     <TableCell className="whitespace-nowrap text-gray-500">
                                         {formatDate(content.createdAt)}
@@ -162,7 +172,7 @@ export default function CategoriesLayout() {
                                                 onClick={() => {
                                                     setIsEditing(true);
                                                     setEditingId(content.id || null);
-                                                    setFormData({ title: content.title });
+                                                    setFormData({ province: content.province, city: content.city });
                                                     openModal();
                                                 }}
                                                 className="p-1.5 text-indigo-600 hover:text-indigo-900 hover:bg-indigo-50 rounded-full transition-colors"
@@ -223,6 +233,7 @@ export default function CategoriesLayout() {
                     const deleteModal = document.getElementById('delete_modal') as HTMLDialogElement | null;
                     deleteModal?.close();
                 }}
+                isDeleting={isDeleting}
             />
         </section>
     )

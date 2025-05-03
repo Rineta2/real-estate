@@ -44,7 +44,7 @@ export default function SuperAdminHeader({ onSidebarToggle }: HeaderProps) {
 
     const isDropdownActive = (item: MenuItem) => {
         if (item.subItems) {
-            return item.subItems.some((subItem: SubMenuItem) => pathname.startsWith(subItem.href));
+            return item.subItems.some((subItem: SubMenuItem) => isLinkActive(subItem.href));
         }
         return false;
     };
