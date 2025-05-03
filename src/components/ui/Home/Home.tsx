@@ -52,13 +52,13 @@ export default function Home() {
             </div>
 
             {/* Content */}
-            <div className="relative flex flex-col items-center justify-center pt-48 px-4 sm:px-6 md:px-10 h-full">
-                <div className="container mx-auto text-center">
+            <div className="relative flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 md:px-10">
+                <div className="container mx-auto text-center max-w-4xl">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg mb-4 sm:mb-6 mx-auto max-w-[70%] lg:max-w-[60%]"
+                        className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg mb-4 sm:mb-6"
                     >
                         {title}
                     </motion.h1>
@@ -67,7 +67,7 @@ export default function Home() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
-                        className="text-base md:text-lg text-white/90 drop-shadow mb-6 mx-auto max-w-[95%] sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%]"
+                        className="text-base md:text-lg text-white/90 drop-shadow mb-6"
                     >
                         {description}
                     </motion.p>

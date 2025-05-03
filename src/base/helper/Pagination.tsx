@@ -71,8 +71,10 @@ export const Pagination: React.FC<PaginationProps> = ({
                     breakClassName={'flex'}
                     breakLinkClassName={'flex items-center justify-center'}
                     activeClassName={`
-                        !bg-primary !text-white
-                        ring-2 ring-primary/20
+                        !bg-primary/10 !text-primary
+                        font-semibold
+                        ring-1 ring-primary/20
+                        hover:!bg-primary/20
                     `}
                     disabledClassName={`
                         opacity-50 cursor-not-allowed
