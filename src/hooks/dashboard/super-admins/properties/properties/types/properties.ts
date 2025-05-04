@@ -59,3 +59,11 @@ export interface FormInputs {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface DeleteModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  propertyTitle: string;
+  isLoading: boolean;
+}
