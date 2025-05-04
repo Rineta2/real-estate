@@ -12,6 +12,7 @@ import { format } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 import { Pagination } from '@/base/helper/Pagination'
 import Image from 'next/image'
+import PropertiesSkelaton from './PropertiesSkelaton'
 
 export default function PropertiesLayout() {
     const {
@@ -29,14 +30,11 @@ export default function PropertiesLayout() {
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState<Properties | undefined>();
     const [propertyToDelete, setPropertyToDelete] = useState<Properties | undefined>();
-    const [isInitialLoading, setIsInitialLoading] = useState(true);
     const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         const loadInitialData = async () => {
-            setIsInitialLoading(true);
             await fetchProperties(0);
-            setIsInitialLoading(false);
         };
 
         loadInitialData();
@@ -84,6 +82,10 @@ export default function PropertiesLayout() {
         setIsViewModalOpen(true);
     };
 
+    if (isLoading) {
+        return <PropertiesSkelaton />
+    }
+
     return (
         <section>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 px-4 sm:px-6 border-b border-gray-200 bg-primary-50 rounded-md mb-6 sm:mb-10">
@@ -107,114 +109,77 @@ export default function PropertiesLayout() {
                 </div>
             </div>
 
-            {isInitialLoading ? (
-                <div className="animate-pulse">
-                    <div className="h-96 bg-gray-200 rounded"></div>
-                </div>
-            ) : (
-                <>
-                    <div className="w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Thumbnail</th>
-                                        <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</th>
-                                        <th scope="col" className="hidden sm:table-cell px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
-                                        <th scope="col" className="hidden sm:table-cell px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                                        <th scope="col" className="hidden md:table-cell px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Project Status</th>
-                                        <th scope="col" className="hidden md:table-cell px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Created At</th>
-                                        <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    {properties.map((property) => (
-                                        <tr key={property.id} className="hover:bg-gray-50 transition-colors duration-150">
-                                            <td className="px-4 py-3 whitespace-nowrap">
-                                                <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden border border-gray-200">
-                                                    <Image
-                                                        src={property.thumbnail || '/placeholder.png'}
-                                                        alt={property.title}
-                                                        fill
-                                                        className="object-cover"
-                                                    />
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-medium text-gray-900">{property.title}</span>
-                                                    <div className="sm:hidden mt-1 space-y-1">
-                                                        <span className="text-xs text-gray-500">{property.type}</span>
-                                                        <span className="block text-xs text-gray-500">{property.status}</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="hidden sm:table-cell px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                                                {property.type}
-                                            </td>
-                                            <td className="hidden sm:table-cell px-4 py-3 whitespace-nowrap">
-                                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${property.status === 'Publish'
-                                                    ? 'bg-green-100 text-green-800'
-                                                    : 'bg-yellow-100 text-yellow-800'
-                                                    }`}>
-                                                    {property.status}
-                                                </span>
-                                            </td>
-                                            <td className="hidden md:table-cell px-4 py-3 whitespace-nowrap">
-                                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${property.statusProject === 'Selesai'
-                                                    ? 'bg-green-100 text-green-800'
-                                                    : property.statusProject === 'Sedang Berjalan'
-                                                        ? 'bg-blue-100 text-blue-800'
-                                                        : 'bg-yellow-100 text-yellow-800'
-                                                    }`}>
-                                                    {property.statusProject}
-                                                </span>
-                                            </td>
-                                            <td className="hidden md:table-cell px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                                                {formatDate(property.createdAt)}
-                                            </td>
-                                            <td className="px-4 py-3 whitespace-nowrap">
-                                                <div className="flex items-center gap-2">
-                                                    <button
-                                                        onClick={() => handleView(property)}
-                                                        className="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors"
-                                                        title="View"
-                                                    >
-                                                        <FaEye className="w-4 h-4" />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleEdit(property)}
-                                                        className="p-1.5 text-primary-600 hover:text-primary-800 hover:bg-primary-50 rounded-md transition-colors"
-                                                        title="Edit"
-                                                    >
-                                                        <FaEdit className="w-4 h-4" />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleDelete(property)}
-                                                        className="p-1.5 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md transition-colors"
-                                                        title="Delete"
-                                                    >
-                                                        <FaTrash className="w-4 h-4" />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {properties.map((property) => (
+                    <div key={property.id} className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
+                        <div className="relative h-56 w-full overflow-hidden rounded-t-lg">
+                            <Image
+                                src={property.thumbnail || '/placeholder.png'}
+                                alt={property.title}
+                                fill
+                                className="object-cover transition-transform duration-300 hover:scale-110"
+                            />
+                            <div className="absolute top-3 right-3">
+                                <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${property.status === 'Publish'
+                                    ? 'bg-green-100 text-green-800'
+                                    : 'bg-yellow-100 text-yellow-800'
+                                    }`}>
+                                    {property.status}
+                                </span>
+                            </div>
+                        </div>
+                        <div className="p-5">
+                            <div className="flex items-center justify-between mb-2">
+                                <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${property.statusProject === 'Selesai'
+                                    ? 'bg-green-100 text-green-800'
+                                    : property.statusProject === 'Sedang Berjalan'
+                                        ? 'bg-blue-100 text-blue-800'
+                                        : 'bg-yellow-100 text-yellow-800'
+                                    }`}>
+                                    {property.statusProject}
+                                </span>
+                                <span className="text-sm text-gray-500">{formatDate(property.createdAt)}</span>
+                            </div>
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">{property.title}</h3>
+                            <p className="text-sm text-gray-500 mb-4">{property.type}</p>
+                            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                                <div className="flex items-center space-x-4">
+                                    <button
+                                        onClick={() => handleView(property)}
+                                        className="inline-flex items-center text-sm font-medium text-primary-600 hover:text-primary-700"
+                                    >
+                                        <FaEye className="w-4 h-4 mr-1" />
+                                        View
+                                    </button>
+                                    <button
+                                        onClick={() => handleEdit(property)}
+                                        className="inline-flex items-center text-sm font-medium text-primary-600 hover:text-primary-700"
+                                    >
+                                        <FaEdit className="w-4 h-4 mr-1" />
+                                        Edit
+                                    </button>
+                                </div>
+                                <button
+                                    onClick={() => handleDelete(property)}
+                                    className="inline-flex items-center text-sm font-medium text-red-600 hover:text-red-700"
+                                >
+                                    <FaTrash className="w-4 h-4 mr-1" />
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
+                ))}
+            </div>
 
-                    {!isLoading && totalItems > 0 && (
-                        <div className="mt-8">
-                            <Pagination
-                                currentPage={currentPage}
-                                totalPages={totalPages}
-                                onPageChange={handlePageChange}
-                            />
-                        </div>
-                    )}
-                </>
+            {!isLoading && totalItems > 0 && (
+                <div className="mt-8">
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                </div>
             )}
 
             <ContentModal

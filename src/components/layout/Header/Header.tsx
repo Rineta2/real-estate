@@ -43,6 +43,11 @@ export const menuHamburger = [
     },
 
     {
+        name: "Properties",
+        href: "/properties",
+    },
+
+    {
         name: "Blog",
         href: "/blog",
     },
