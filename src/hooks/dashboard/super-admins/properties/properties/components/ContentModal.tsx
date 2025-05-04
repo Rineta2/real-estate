@@ -200,12 +200,45 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                 toast.success('Property created successfully!');
             }
             onClose();
+            resetForm();
         } catch (error) {
             console.error('Error submitting form:', error);
             toast.error('Failed to save property');
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const resetForm = () => {
+        reset({
+            title: '',
+            slug: '',
+            description: '',
+            thumbnail: '',
+            images: [],
+            facilities: [],
+            details: [],
+            type: '',
+            status: 'Draf',
+            content: '',
+            author: {
+                name: user?.displayName || '',
+                role: user?.role || '',
+                uid: user?.uid || '',
+                photoURL: user?.photoURL || '',
+            },
+            statusProject: 'Coming Soon',
+        });
+        setSelectedImages([]);
+        setSelectedFacilities([]);
+        setSelectedDetails([]);
+        setSelectedLocations([]);
+        setSelectedThumbnail(null);
+    };
+
+    const handleClose = () => {
+        resetForm();
+        onClose();
     };
 
     const handleLocationChange = (locationId: string, isChecked: boolean) => {
@@ -290,7 +323,7 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                         {property ? 'Edit Property' : 'Create Property'}
                     </h2>
                     <button
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="text-gray-500 hover:text-gray-700"
                     >
                         ✕
@@ -882,7 +915,7 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                     <div className="flex justify-end gap-4 mt-8">
                         <button
                             type="button"
-                            onClick={onClose}
+                            onClick={handleClose}
                             className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5"
                         >
                             Cancel
