@@ -102,6 +102,11 @@ export const menuItems = [
         label: "Locations",
         href: "/dashboard/super-admins/properties/locations",
       },
+
+      {
+        label: "Icons",
+        href: "/dashboard/super-admins/properties/icons",
+      },
     ],
   },
 
