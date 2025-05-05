@@ -16,8 +16,8 @@ export default function Page() {
       <Home />
       <Featured />
       <YourDream />
-      <Faqs />
       <Properties />
+      <Faqs />
     </Fragment>
   );
 }

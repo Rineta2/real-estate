@@ -33,7 +33,7 @@ export default function YourDream() {
     const imageUrl = yourDream.length > 0 ? yourDream[0].imageUrl : [];
 
     return (
-        <section className='min-h-screen py-8 sm:py-12 md:py-16 lg:py-20 bg-neutral-50'>
+        <section className='min-h-full md:min-h-screen py-8 sm:py-12 md:py-16 lg:py-20 bg-neutral-50'>
             <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-14">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
                     {/* Kiri: Judul & Deskripsi */}
