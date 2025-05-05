@@ -4,8 +4,8 @@ export interface facilities {
 }
 
 export interface details {
-  title: string;
   imageUrl: string;
+  title: string;
 }
 
 export interface locations {
@@ -14,30 +14,6 @@ export interface locations {
 }
 
 export interface Properties {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  thumbnail: string;
-  images: string[];
-  facilities: facilities[];
-  details: details[];
-  type: string;
-  status: "Draf" | "Publish";
-  content: string;
-  author: {
-    name: string;
-    role: string;
-    uid: string;
-    photoURL?: string;
-  };
-  statusProject: "Sedang Berjalan" | "Selesai" | "Coming Soon";
-  locations: locations[];
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface FormInputs {
   id?: string;
   title: string;
   slug: string;
@@ -47,17 +23,41 @@ export interface FormInputs {
   facilities: facilities[];
   details: details[];
   type: string;
-  status: "Draf" | "Publish";
+  status: string;
   content: string;
   author: {
     name: string;
     role: string;
     uid: string;
-    photoURL?: string;
+    photoURL: string;
   };
-  statusProject: "Sedang Berjalan" | "Selesai" | "Coming Soon";
+  statusProject: string;
+  province: string;
+  city: string;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface FormInputs {
+  title: string;
+  slug: string;
+  description: string;
+  thumbnail: string;
+  images: string[];
+  facilities: facilities[];
+  details: details[];
+  type: string;
+  status: string;
+  content: string;
+  author: {
+    name: string;
+    role: string;
+    uid: string;
+    photoURL: string;
+  };
+  statusProject: string;
+  province: string;
+  city: string;
 }
 
 export interface DeleteModalProps {

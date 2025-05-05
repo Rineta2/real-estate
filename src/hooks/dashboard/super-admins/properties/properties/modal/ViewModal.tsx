@@ -99,13 +99,9 @@ export default function ViewModal({ isOpen, onClose, property }: ViewModalProps)
                                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                                         <span className="text-sm sm:text-base text-gray-500">Location:</span>
                                         <div className="flex flex-col gap-2">
-                                            {property.locations.map((location, index) => (
-                                                <div key={index} className="flex items-center gap-2">
-                                                    <span className="px-3 sm:px-4 py-1 sm:py-1.5 bg-purple-50 text-purple-700 rounded-full text-xs sm:text-sm font-medium">
-                                                        {location.city}, {location.province}
-                                                    </span>
-                                                </div>
-                                            ))}
+                                            <span className="px-3 sm:px-4 py-1 sm:py-1.5 bg-purple-50 text-purple-700 rounded-full text-xs sm:text-sm font-medium">
+                                                {property.province} {property.city}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

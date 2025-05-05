@@ -8,6 +8,8 @@ import YourDream from "@/components/ui/Your-Dream/YourDream"
 
 import Faqs from "@/components/ui/Faqs/Faqs"
 
+import Properties from "@/components/ui/properties/Properties"
+
 export default function Page() {
   return (
     <Fragment>
@@ -15,6 +17,7 @@ export default function Page() {
       <Featured />
       <YourDream />
       <Faqs />
+      <Properties />
     </Fragment>
   );
 }

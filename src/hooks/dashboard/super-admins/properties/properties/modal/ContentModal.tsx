@@ -42,7 +42,8 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
     const [selectedFacilities, setSelectedFacilities] = useState<facilities[]>([]);
     const [selectedDetails, setSelectedDetails] = useState<details[]>([]);
-    const [selectedLocations, setSelectedLocations] = useState<{ city: string; province: string }[]>([]);
+    const [selectedProvince, setSelectedProvince] = useState<string>('');
+    const [selectedCity, setSelectedCity] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null);
     const [isThumbnailUploading, setIsThumbnailUploading] = useState(false);
@@ -67,11 +68,14 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                 content: property.content,
                 author: property.author,
                 statusProject: property.statusProject,
+                province: property.province,
+                city: property.city,
             });
             setSelectedImages(property.images);
             setSelectedFacilities(property.facilities);
             setSelectedDetails(property.details || []);
-            setSelectedLocations(property.locations);
+            setSelectedProvince(property.province || '');
+            setSelectedCity(property.city || '');
         } else {
             reset({
                 title: '',
@@ -91,11 +95,14 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                     photoURL: user?.photoURL || '',
                 },
                 statusProject: 'Coming Soon',
+                province: '',
+                city: '',
             });
             setSelectedImages([]);
             setSelectedFacilities([]);
             setSelectedDetails([]);
-            setSelectedLocations([]);
+            setSelectedProvince('');
+            setSelectedCity('');
         }
     }, [property, reset, user]);
 
@@ -183,7 +190,8 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                 images: selectedImages,
                 facilities: selectedFacilities,
                 details: selectedDetails,
-                locations: selectedLocations,
+                province: selectedProvince,
+                city: selectedCity,
                 author: {
                     name: user?.displayName || '',
                     role: user?.role || '',
@@ -228,11 +236,14 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                 photoURL: user?.photoURL || '',
             },
             statusProject: 'Coming Soon',
+            province: '',
+            city: '',
         });
         setSelectedImages([]);
         setSelectedFacilities([]);
         setSelectedDetails([]);
-        setSelectedLocations([]);
+        setSelectedProvince('');
+        setSelectedCity('');
         setSelectedThumbnail(null);
     };
 
@@ -246,22 +257,17 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
         if (!location) return;
 
         if (isChecked) {
-            // Clear all previous selections and add only the selected location
-            setSelectedLocations([{
-                city: location.city[0].city,
-                province: location.province
-            }]);
+            setSelectedProvince(location.province);
+            setSelectedCity(''); // Reset city when province changes
         } else {
-            // Clear all selections if the location is unchecked
-            setSelectedLocations([]);
+            setSelectedProvince('');
+            setSelectedCity('');
         }
     };
 
     const handleCityChange = (city: string, province: string) => {
-        setSelectedLocations([{
-            city,
-            province
-        }]);
+        setSelectedCity(city);
+        setSelectedProvince(province);
     };
 
     // Drag and drop handlers for images upload
@@ -806,6 +812,7 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                         )}
                     </div>
 
+                    {/* Locations Section */}
                     <div className="space-y-4 bg-gray-50 p-6 rounded-xl border border-gray-200">
                         <label className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -821,9 +828,7 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                                         type="radio"
                                         name="location"
                                         id={`location-${location.id}`}
-                                        checked={selectedLocations.some(selected =>
-                                            selected.province === location.province
-                                        )}
+                                        checked={selectedProvince === location.province}
                                         onChange={(e) => handleLocationChange(location.id!, e.target.checked)}
                                         className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500"
                                     />
@@ -836,22 +841,20 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                                 </div>
                             ))}
                         </div>
-                        {selectedLocations.length > 0 && (
+                        {selectedProvince && (
                             <div className="mt-4">
                                 <h4 className="text-sm font-medium text-gray-700 mb-2">Select City:</h4>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {locations
-                                        .find(loc => loc.province === selectedLocations[0]?.province)
+                                        .find(loc => loc.province === selectedProvince)
                                         ?.city.map((city) => (
                                             <div key={city.city} className="flex items-center">
                                                 <input
                                                     type="radio"
                                                     name="city"
                                                     id={`city-${city.city}`}
-                                                    checked={selectedLocations.some(selected =>
-                                                        selected.city === city.city
-                                                    )}
-                                                    onChange={() => handleCityChange(city.city, selectedLocations[0].province)}
+                                                    checked={selectedCity === city.city}
+                                                    onChange={() => handleCityChange(city.city, selectedProvince)}
                                                     className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500"
                                                 />
                                                 <label
@@ -866,14 +869,11 @@ export default function ContentModal({ isOpen, onClose, property }: ContentModal
                                 <div className="mt-4">
                                     <h4 className="text-sm font-medium text-gray-700 mb-2">Selected:</h4>
                                     <div className="flex flex-wrap gap-2">
-                                        {selectedLocations.map((loc, index) => (
-                                            <span
-                                                key={index}
-                                                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
-                                            >
-                                                {loc.city}, {loc.province}
+                                        {selectedProvince && selectedCity && (
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                                                {selectedCity}, {selectedProvince}
                                             </span>
-                                        ))}
+                                        )}
                                     </div>
                                 </div>
                             </div>
