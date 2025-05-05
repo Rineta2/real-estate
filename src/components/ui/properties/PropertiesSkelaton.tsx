@@ -1,36 +1,65 @@
 import React from 'react'
 
-export default function HomeSkelaton() {
+export default function PropertiesSkelaton() {
     return (
-        <section className='min-h-screen relative overflow-hidden'>
-            {/* Background Image skeleton */}
-            <div className='absolute w-full h-full inset-0 bg-gradient-to-b from-gray-300 to-gray-100 animate-pulse'>
-                {/* White gradient overlay at the bottom */}
-                <div className="absolute bottom-0 left-0 w-full h-1/6 bg-gradient-to-t from-white via-white/70 to-transparent" />
-            </div>
-
-            {/* Content */}
-            <div className="relative flex flex-col items-center justify-center pt-40 px-4 sm:px-6 md:px-10 h-full">
-                <div className="container mx-auto text-center">
-                    {/* Title skeleton */}
-                    <div
-                        className="h-14 md:h-16 lg:h-20 bg-gray-200 rounded-lg mx-auto max-w-[70%] lg:max-w-[60%] mb-4 sm:mb-6 relative overflow-hidden"
-                    >
+        <section className='relative py-20 sm:py-24 bg-neutral-50'>
+            <div className="container px-4 sm:px-6 md:px-8 lg:px-12">
+                {/* Header Skeleton */}
+                <div className='flex items-center justify-center flex-col gap-8 mb-20'>
+                    <div className="h-14 bg-gray-200 rounded-lg w-[70%] max-w-[500px] relative overflow-hidden">
                         <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200"></div>
                     </div>
-
-                    {/* Description skeleton */}
-                    <div
-                        className="h-20 bg-gray-200 rounded-lg mx-auto max-w-[95%] sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] mb-6 relative overflow-hidden"
-                    >
+                    <div className="h-6 bg-gray-200 rounded-lg w-[90%] max-w-[600px] relative overflow-hidden">
                         <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200"></div>
                     </div>
                 </div>
-            </div>
 
-            {/* Background blur effect */}
-            <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 opacity-20 blur-[100px]" />
-            <div className="absolute right-0 bottom-0 -z-10 h-[310px] w-[310px] rounded-full bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 opacity-20 blur-[100px]" />
+                {/* Property Cards Grid Skeleton */}
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'>
+                    {[...Array(6)].map((_, index) => (
+                        <div key={index} className="group relative bg-white rounded-3xl shadow-sm border border-gray-100 p-3 pt-3">
+                            {/* Badge Skeleton */}
+                            <div className="absolute -top-3 left-4 z-10">
+                                <div className="h-8 w-24 bg-gray-200 rounded-full relative overflow-hidden">
+                                    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200"></div>
+                                </div>
+                            </div>
+
+                            {/* Image Skeleton */}
+                            <div className='w-full h-72 overflow-hidden rounded-2xl bg-gray-200 relative'>
+                                <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200"></div>
+                            </div>
+
+                            {/* Content Skeleton */}
+                            <div className="p-6 relative bg-white flex-1 flex flex-col">
+                                <div className="h-7 bg-gray-200 rounded-lg w-3/4 mb-3 relative overflow-hidden">
+                                    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200"></div>
+                                </div>
+                                <div className="h-16 bg-gray-200 rounded-lg w-full mb-6 relative overflow-hidden">
+                                    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200"></div>
+                                </div>
+                                <div className="h-6 bg-gray-200 rounded-lg w-1/2 relative overflow-hidden">
+                                    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200"></div>
+                                </div>
+                            </div>
+
+                            {/* Facilities Skeleton */}
+                            <div className="border-t border-gray-100 px-6 py-5 bg-gray-50/80 rounded-b-2xl flex flex-wrap gap-6">
+                                {[...Array(3)].map((_, idx) => (
+                                    <div key={idx} className="flex items-center gap-2.5">
+                                        <div className="h-6 w-6 bg-gray-200 rounded-full relative overflow-hidden">
+                                            <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200"></div>
+                                        </div>
+                                        <div className="h-5 bg-gray-200 rounded-lg w-20 relative overflow-hidden">
+                                            <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200"></div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </section>
     );
 }

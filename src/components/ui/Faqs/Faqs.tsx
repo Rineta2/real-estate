@@ -53,8 +53,8 @@ export default function Faqs() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                     >
-                        <h1 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold'>{title}</h1>
-                        <p className='text-xs sm:text-sm md:text-base lg:text-lg text-gray-600'>{description}</p>
+                        <h1 className='text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold'>{title}</h1>
+                        <p className='text-sm md:text-base lg:text-lg text-gray-600'>{description}</p>
                     </motion.div>
 
                     <motion.div
@@ -77,7 +77,7 @@ export default function Faqs() {
                                     transition={{ duration: 0.3, delay: idx * 0.1 }}
                                 >
                                     <div className='flex justify-between items-center'>
-                                        <h3 className='font-semibold capitalize text-base sm:text-lg md:text-xl'>{item.title}</h3>
+                                        <h3 className='font-semibold capitalize text-lg md:text-xl'>{item.title}</h3>
                                         <motion.div
                                             animate={{ rotate: isExpanded ? 45 : 0 }}
                                             transition={{ duration: 0.3 }}
@@ -91,7 +91,7 @@ export default function Faqs() {
                                         animate={{ opacity: isExpanded ? 1 : 0 }}
                                         transition={{ duration: 0.3 }}
                                     >
-                                        <p className='text-xs sm:text-sm md:text-base mt-2 text-gray-600'>{item.description}</p>
+                                        <p className='text-sm md:text-base mt-2 text-gray-600'>{item.description}</p>
                                     </motion.div>
                                 </motion.div>
                             )

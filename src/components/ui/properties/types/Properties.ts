@@ -30,3 +30,12 @@ export interface PropertiesType {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface PropertyCardProps {
+  item: PropertiesType;
+  index: number;
+}
+
+export interface TopPropertyProps {
+  property: PropertiesType;
+}

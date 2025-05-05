@@ -13,11 +13,13 @@ import Properties from "@/components/ui/properties/Properties"
 export default function Page() {
   return (
     <Fragment>
-      <Home />
-      <Featured />
-      <YourDream />
-      <Properties />
-      <Faqs />
+      <main className="overflow-hidden">
+        <Home />
+        <Featured />
+        <YourDream />
+        <Properties />
+        <Faqs />
+      </main>
     </Fragment>
   );
 }
