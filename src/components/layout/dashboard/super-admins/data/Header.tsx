@@ -50,8 +50,13 @@ export const menuItems = [
     icon: RiPagesFill,
     subItems: [
       {
-        label: "Contact",
-        href: "/dashboard/super-admins/pages/contact",
+        label: "Banner Contact",
+        href: "/dashboard/super-admins/pages/banner-contact",
+      },
+
+      {
+        label: "Card Contact",
+        href: "/dashboard/super-admins/pages/card-contact",
       },
     ],
   },
@@ -125,6 +130,7 @@ export const menuItems = [
         label: "All Blog",
         href: "/dashboard/super-admins/blog/blog",
       },
+
       {
         label: "Categories",
         href: "/dashboard/super-admins/blog/categories",
