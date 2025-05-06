@@ -2,7 +2,7 @@ import React from 'react'
 
 import { motion } from 'framer-motion'
 
-import { CardAboutType } from '../types/about'
+import { CardAboutType } from '../about/types/about'
 
 import Image from 'next/image';
 

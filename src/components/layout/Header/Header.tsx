@@ -8,7 +8,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 import { IoClose } from "react-icons/io5";
 
-import { FaFacebookF, FaTwitter, FaInstagram, FaTiktok, FaLinkedinIn, FaPinterestP } from "react-icons/fa";
+import { menuHamburger, socialMedia } from "@/components/layout/Header/data/Header"
 
 import { IoLocationOutline } from "react-icons/io5";
 
@@ -16,87 +16,22 @@ import React, { useEffect, useState } from "react";
 
 import { useAuth } from "@/utils/context/AuthContext";
 
-import ProfileMenu from "./ProfileMenu";
-
 import { motion, AnimatePresence } from 'framer-motion';
 
-export const menu = [
-    {
-        name: "Login",
-        href: "/signin",
-    }
-]
-
-export const menuHamburger = [
-    {
-        name: "Home",
-        href: "/",
-    },
-    {
-        name: "About",
-        href: "/about",
-    },
-
-    {
-        name: "Gallery",
-        href: "/gallery",
-    },
-
-    {
-        name: "Properties",
-        href: "/properties",
-    },
-
-    {
-        name: "Blog",
-        href: "/blog",
-    },
-
-    {
-        name: "Contact",
-        href: "/contact",
-    },
-]
-
-export const socialMedia = [
-    {
-        icon: FaFacebookF,
-        href: "https://www.facebook.com/profile.php?id=61573748215102&mibextid=ZbWKwL",
-    },
-    {
-        icon: FaTwitter,
-        href: "https://twitter.com",
-    },
-    {
-        icon: FaInstagram,
-        href: "https://www.instagram.com/spacedigitalia/?igsh=MWhucmN5bXl1YnViZQ%3D%3D#",
-    },
-    {
-        icon: FaTiktok,
-        href: "https://www.tiktok.com/@spacedigitalia?_t=ZS-8uKNO1JcPod&_r=1",
-    },
-    {
-        icon: FaLinkedinIn,
-        href: "https://linkedin.com",
-    },
-    {
-        icon: FaPinterestP,
-        href: "https://pinterest.com",
-    },
-]
+import ProfileMenu from "./ProfileMenu";
 
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
-    const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { user } = useAuth();
-
-    const toggleProfile = () => {
-        setIsProfileOpen(!isProfileOpen);
-    };
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
+    };
+
+    const toggleProfile = () => {
+        setIsProfileOpen(!isProfileOpen);
     };
 
     // Close menu when clicking a link
@@ -157,34 +92,32 @@ export default function Header() {
     };
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white border-b border-gray-100" : "bg-transparent"}`}>
-            <div className="container px-4 md:px-10 py-3 flex justify-between items-center">
+        <header className={`fixed ${isMenuOpen ? 'top-0' : 'top-2'} left-0 right-0 z-50 flex justify-center items-start h-24 px-3 lg:px-12`}>
+            <div className="w-full container mx-auto rounded-xl bg-white shadow-lg px-6 py-3 flex items-center justify-between h-16 relative">
+                {/* Hamburger Kiri */}
                 <button
                     onClick={toggleMenu}
-                    className={`flex items-center gap-2 py-2 px-4 md:px-6 rounded-full cursor-pointer hover:bg-white/15 transition-all duration-300 active:scale-95 bg-white/10 ${scrolled ? "text-black" : "text-white"}`}>
-                    <span className="font-medium tracking-wide text-sm md:text-base">Menu</span>
-                    <motion.div
-                        animate={isMenuOpen ? { rotate: 90 } : { rotate: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                    >
-                        {isMenuOpen ?
-                            <IoClose className="text-lg md:text-xl" /> :
-                            <RxHamburgerMenu className="text-lg md:text-xl" />
-                        }
-                    </motion.div>
+                    className="flex items-center justify-center w-10 h-10 rounded-md text-[#2d223a] hover:bg-[#edeafd] transition-all duration-200"
+                >
+                    {isMenuOpen ?
+                        <IoClose className="text-2xl" /> :
+                        <RxHamburgerMenu className="text-2xl" />
+                    }
                 </button>
 
-                <Link href="/" className="flex justify-center">
+                {/* Logo Tengah */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center">
                     <Image
                         src={logo}
                         alt="logo"
-                        width={100}
-                        height={100}
-                        className={`object-cover transition-all duration-300 ${scrolled ? "brightness-0" : ""}`}
+                        width={110}
+                        height={40}
+                        className="object-contain filter brightness-0 w-[80px] h-auto md:w-[110px]"
                     />
-                </Link>
+                </div>
 
-                <div className="flex items-center gap-3 md:gap-4">
+                {/* Tombol Aksi Kanan */}
+                <div className="flex items-center gap-2">
                     {user ? (
                         <ProfileMenu
                             isProfileOpen={isProfileOpen}
@@ -193,7 +126,7 @@ export default function Header() {
                     ) : (
                         <Link
                             href="/signin"
-                            className={`py-2 px-4 md:px-6 rounded-full bg-white/10 font-medium hover:bg-teal-400/20 hover:text-teal-400 transition-all duration-300 text-sm md:text-base ${scrolled ? "text-black" : "text-white"}`}
+                            className="py-2 px-4 rounded-full bg-white/10 font-medium hover:bg-[#a996fd]/20 hover:text-[#a996fd] transition-all duration-300 text-sm text-[#2d223a]"
                         >
                             Login
                         </Link>

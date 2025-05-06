@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { TopAboutType } from '../types/about'
+import { TopAboutType } from '../about/types/about'
 
 interface TopAboutLayoutProps {
     topAbout: TopAboutType[];

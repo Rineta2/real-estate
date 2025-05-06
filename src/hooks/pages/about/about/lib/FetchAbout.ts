@@ -7,7 +7,7 @@ import {
   ArtAboutType,
   CardAboutType,
   AboutType,
-} from "@/hooks/pages/about/types/about";
+} from "@/hooks/pages/about/about/types/about";
 
 export function FetchTopAbout(callback: (home: TopAboutType[]) => void) {
   const q = query(

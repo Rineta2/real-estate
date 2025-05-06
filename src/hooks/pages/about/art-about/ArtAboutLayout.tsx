@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { ArtAboutType } from '../types/about'
+import { ArtAboutType } from '../about/types/about'
 
 interface ArtAboutLayoutProps {
     artAbout: ArtAboutType[];

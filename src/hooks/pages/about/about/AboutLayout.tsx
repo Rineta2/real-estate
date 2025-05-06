@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState, Fragment } from 'react'
 
-import { FetchTopAbout, FetchArtAbout, FetchCardAbout, FetchAbout } from "@/hooks/pages/about/lib/FetchAbout"
+import { FetchTopAbout, FetchArtAbout, FetchCardAbout, FetchAbout } from "@/hooks/pages/about/about/lib/FetchAbout"
 
-import { TopAboutType, ArtAboutType, CardAboutType, AboutType } from "@/hooks/pages/about/types/about"
+import { TopAboutType, ArtAboutType, CardAboutType, AboutType } from "@/hooks/pages/about/about/types/about"
 
 import AboutSkelaton from './AboutSkelaton'
 

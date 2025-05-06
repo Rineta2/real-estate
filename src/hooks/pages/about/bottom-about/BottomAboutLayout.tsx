@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { AboutType } from '../types/about'
+import { AboutType } from '../about/types/about'
 import Image from 'next/image';
 
 interface BottomAboutLayoutProps {
