@@ -56,7 +56,7 @@ export default function SearchModal({ isOpen, onClose, searchQuery, setSearchQue
                 </div>
 
                 {filteredProperties.length > 0 ? (
-                    <div className="space-y-4">
+                    <div className="space-y-4 max-h-[60vh] overflow-y-auto">
                         {filteredProperties.map((property, index) => (
                             <Link
                                 key={index}
