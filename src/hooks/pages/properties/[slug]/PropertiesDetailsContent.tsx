@@ -219,7 +219,9 @@ export default function PropertiesDetailsContent({ slug }: { slug: string }) {
                                 [&_th]:bg-gray-100 [&_th]:p-1.5 sm:[&_th]:p-2 [&_th]:text-left [&_th]:border [&_th]:border-gray-300 [&_th]:text-xs sm:[&_th]:text-sm
                                 [&_td]:p-1.5 sm:[&_td]:p-2 [&_td]:border [&_td]:border-gray-300 [&_td]:text-xs sm:[&_td]:text-sm
                                 
-                                [&_hr]:my-4 sm:[&_hr]:my-6 [&_hr]:border-gray-200'>
+                                [&_hr]:my-4 sm:[&_hr]:my-6 [&_hr]:border-gray-200
+                                
+                                [&_iframe]:w-full [&_iframe]:aspect-video [&_iframe]:rounded-lg [&_iframe]:my-4 [&_iframe]:shadow-md'>
                                         <div
                                             dangerouslySetInnerHTML={{
                                                 __html: filteredBlog?.content || ''
