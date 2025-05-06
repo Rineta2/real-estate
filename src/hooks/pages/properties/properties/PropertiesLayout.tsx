@@ -6,15 +6,15 @@ import { FetchProperties } from '@/components/ui/properties/utils/FetchPropertie
 
 import { PropertiesType } from '@/components/ui/properties/types/Properties'
 
-import PropertiesSkelaton from '@/hooks/pages/properties/PropertiesSkelaton';
+import PropertiesSkelaton from '@/hooks/pages/properties/properties/PropertiesSkelaton';
 
 import PropertyCard from '@/components/ui/properties/components/PropertyCard';
 
 import { Pagination } from '@/base/helper/Pagination';
 
-import SearchModal from '@/hooks/pages/properties/modal/SearchModal';
+import SearchModal from '@/hooks/pages/properties/properties/modal/SearchModal';
 
-import { TopProperty } from '@/hooks/pages/properties/components/TopProperties';
+import { TopProperty } from '@/hooks/pages/properties/properties/components/TopProperties';
 
 export default function PropertiesLayout() {
     const [properties, setProperties] = useState<PropertiesType[]>([]);

@@ -17,7 +17,7 @@ export interface PropertiesType {
     id: string;
     imageUrl: string;
     title: string;
-  };
+  }[];
   facilities: {
     id: string;
     imageUrl: string;
@@ -38,4 +38,9 @@ export interface PropertyCardProps {
 
 export interface TopPropertyProps {
   property: PropertiesType;
+}
+
+export interface RelatedPropertiesProps {
+  relatedProperties: PropertiesType[];
+  currentSlug: string;
 }

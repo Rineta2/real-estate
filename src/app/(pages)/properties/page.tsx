@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import PropertiesLayout from "@/hooks/pages/properties/PropertiesLayout";
+import PropertiesLayout from "@/hooks/pages/properties/properties/PropertiesLayout";
 
 export const metadata: Metadata = {
     title: "Properties | Real Estate",
