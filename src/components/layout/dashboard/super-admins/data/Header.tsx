@@ -1,4 +1,4 @@
-import { HiHome, HiUsers, HiOfficeBuilding, HiCog } from "react-icons/hi";
+import { HiHome, HiOfficeBuilding } from "react-icons/hi";
 
 import { LuLayoutDashboard } from "react-icons/lu";
 
@@ -9,6 +9,10 @@ import { GrGallery } from "react-icons/gr";
 import { GrArticle } from "react-icons/gr";
 
 import { SiAboutdotme } from "react-icons/si";
+
+import { CgProfile } from "react-icons/cg";
+
+import { MdManageAccounts } from "react-icons/md";
 
 export const menuItems = [
   {
@@ -139,25 +143,29 @@ export const menuItems = [
   },
 
   {
-    label: "Users",
-    href: "/dashboard/super-admins/users",
-    icon: HiUsers,
+    label: "Accounts",
+    href: "/dashboard/super-admins/accounts",
+    icon: MdManageAccounts,
     subItems: [
       {
-        label: "All Users",
-        href: "/dashboard/super-admins/users",
+        label: "Super Admins",
+        href: "/dashboard/super-admins/accounts/super-admins",
       },
       {
-        label: "Add User",
-        href: "/dashboard/super-admins/users/add",
+        label: "Admins",
+        href: "/dashboard/super-admins/accounts/admins",
+      },
+      {
+        label: "Users",
+        href: "/dashboard/super-admins/accounts/users",
       },
     ],
   },
 
   {
-    label: "Settings",
-    href: "/dashboard/super-admins/settings",
-    icon: HiCog,
+    label: "Profile",
+    href: "/dashboard/super-admins/profile",
+    icon: CgProfile,
   },
 
   {
