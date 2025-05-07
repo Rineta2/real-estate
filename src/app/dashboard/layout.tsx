@@ -10,6 +10,8 @@ import SuperAdminHeader from "@/components/layout/dashboard/super-admins/Sidebar
 
 import UserHeader from "@/components/layout/dashboard/user/Header";
 
+import AdminHeader from "@/components/layout/dashboard/admins/Header";
+
 import Header from "@/components/layout/dashboard/Header";
 
 import AccessDenied from "@/components/layout/dashboard/AccessDenied";
@@ -47,6 +49,13 @@ export default function DashboardLayout({
                 return;
             }
             setCurrentRole(Role.SUPER_ADMIN);
+        } else if (currentPath.startsWith('/dashboard/admins')) {
+            if (!hasRole(Role.ADMIN)) {
+                setIsAuthorized(false);
+                setLoading(false);
+                return;
+            }
+            setCurrentRole(Role.ADMIN);
         } else if (currentPath.startsWith('/dashboard/user')) {
             if (!hasRole(Role.USER)) {
                 setIsAuthorized(false);
@@ -92,6 +101,8 @@ export default function DashboardLayout({
         switch (currentRole) {
             case Role.SUPER_ADMIN:
                 return <SuperAdminHeader onSidebarToggle={setIsSidebarOpen} />;
+            case Role.ADMIN:
+                return <AdminHeader onSidebarToggle={setIsSidebarOpen} />;
             case Role.USER:
                 return <UserHeader onSidebarToggle={setIsSidebarOpen} />;
             default:

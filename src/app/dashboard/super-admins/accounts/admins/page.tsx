@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import AdminsLayout from "@/hooks/dashboard/super-admins/accounts/admins/AdminsLayout";
+import AdminsLayout from "@/hooks/dashboard/super-admins/accounts/admins/AdminLayout";
 
 export const metadata: Metadata = {
     title: "Admins | Real Estate",

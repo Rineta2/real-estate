@@ -1,7 +1,10 @@
 import { Role } from '@/types/Auth';
+
 import { useState } from 'react';
+
 import { TextInput, Select, Button } from 'flowbite-react';
-import { UserFormModalProps } from '@/hooks/dashboard/super-admins/accounts/super-admins/types/SuperAdmins';
+
+import { UserFormModalProps } from '@/hooks/dashboard/super-admins/accounts/users/types/Users';
 
 export default function UserFormModal({
     showModal,
@@ -83,7 +86,7 @@ export default function UserFormModal({
                             sizing="lg"
                             className="text-lg"
                         >
-                            <option value={Role.SUPER_ADMIN}>Super Admin</option>
+                            <option value={Role.USER}>USER</option>
                         </Select>
                     </div>
                 </div>

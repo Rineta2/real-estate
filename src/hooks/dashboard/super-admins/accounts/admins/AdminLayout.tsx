@@ -4,25 +4,25 @@ import { useAuth } from '@/utils/context/AuthContext';
 
 import { Role } from '@/types/Auth';
 
-import SuperAdminsSkelaton from '@/hooks/dashboard/super-admins/accounts/super-admins/SuperAdminsSkelaton';
+import AdminsSkelaton from '@/hooks/dashboard/super-admins/accounts/admins/AdminSkelaton';
 
 import { Pagination } from '@/base/helper/Pagination';
 
-import UserTable from '@/hooks/dashboard/super-admins/accounts/super-admins/components/SuperAdminsTable';
+import UserTable from '@/hooks/dashboard/super-admins/accounts/admins/components/AdminsTable';
 
-import UserFormModal from '@/hooks/dashboard/super-admins/accounts/super-admins/modal/ContentModal';
+import UserFormModal from '@/hooks/dashboard/super-admins/accounts/admins/modal/ContentModal';
 
-import DeleteConfirmationModal from '@/hooks/dashboard/super-admins/accounts/super-admins/modal/DeleteModal';
+import DeleteConfirmationModal from '@/hooks/dashboard/super-admins/accounts/admins/modal/DeleteModal';
 
-import { useSuperAdminsManagement } from '@/hooks/dashboard/super-admins/accounts/super-admins/lib/SuperAdminsManagement';
+import { useAdminsManagement } from '@/hooks/dashboard/super-admins/accounts/admins/lib/AdminsManagement';
 
-import { useSuperAdminsFilters } from '@/hooks/dashboard/super-admins/accounts/super-admins/lib/SuperAdminsFilter';
+import { useAdminsFilters } from '@/hooks/dashboard/super-admins/accounts/admins/lib/AdminsFilter';
 
-import { AcountControls } from '@/hooks/dashboard/super-admins/accounts/super-admins/lib/AccountControls';
+import { AcountControls } from '@/hooks/dashboard/super-admins/accounts/admins/lib/AccountControls';
 
-import FilterControls from '@/hooks/dashboard/super-admins/accounts/super-admins/components/FilterControls';
+import FilterControls from '@/hooks/dashboard/super-admins/accounts/admins/components/FilterControls';
 
-export default function SuperAdminContent() {
+export default function AdminContent() {
     const { user } = useAuth();
     const {
         users,
@@ -31,7 +31,7 @@ export default function SuperAdminContent() {
         deletingId,
         handleModalSubmit,
         handleDeleteUser
-    } = useSuperAdminsManagement();
+    } = useAdminsManagement();
 
     const {
         searchTerm,
@@ -40,7 +40,7 @@ export default function SuperAdminContent() {
         setCurrentPage,
         pageCount,
         paginatedUsers,
-    } = useSuperAdminsFilters(users);
+    } = useAdminsFilters(users);
 
     const {
         showModal,
@@ -56,7 +56,8 @@ export default function SuperAdminContent() {
         closeModals
     } = AcountControls();
 
-    if (isLoading) return <SuperAdminsSkelaton />;
+    if (isLoading) return <AdminsSkelaton />;
+
     if (!user || user.role !== Role.SUPER_ADMIN) {
         return <div>Anda tidak memiliki akses ke halaman ini</div>;
     }
@@ -68,7 +69,7 @@ export default function SuperAdminContent() {
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div className="space-y-1">
                         <h1 className='text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent'>
-                            Super Admins
+                            Admins
                         </h1>
                         <p className='text-gray-500'>
                             Manage and track your accounts
@@ -88,7 +89,7 @@ export default function SuperAdminContent() {
                         >
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
                         </svg>
-                        Add Super Admin
+                        Add Admin
                     </button>
                 </div>
             </div>
