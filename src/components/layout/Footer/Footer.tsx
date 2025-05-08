@@ -4,68 +4,71 @@ import Link from "next/link";
 
 import Logo from "@/base/assets/Logo.png";
 
+import { socialMedia } from "@/components/layout/Header/data/Header";
+
 export default function Footer() {
     return (
-        <footer className="py-12">
-            <div className="container mx-auto px-4 md:px-8 lg:px-14">
-                <div className="md:grid md:grid-cols-4 md:gap-8">
-                    {/* Logo and Tagline */}
-                    <div className="mb-8 md:mb-0">
-                        <Image src={Logo} alt="Logo" width={150} height={40} className="mb-4 brightness-0" />
-                        <div className="text-gray-600 text-sm">
-                            <p>More Comfortable.</p>
-                            <p>More Classy.</p>
-                        </div>
+        <footer className="py-16 bg-white border-t border-gray-100">
+            <div className="container mx-auto px-6 max-w-7xl">
+                {/* Main Footer Content */}
+                <div className="flex flex-col md:flex-row justify-between items-center gap-10">
+                    {/* Logo Section */}
+                    <div className="flex flex-col items-center md:items-start gap-3">
+                        <Image
+                            src={Logo}
+                            alt="Logo"
+                            width={130}
+                            height={35}
+                            className="brightness-0 hover:opacity-80 transition-opacity duration-300"
+                        />
+                        <p className="text-gray-600 text-sm font-medium tracking-wide">
+                            More Comfortable. More Classy.
+                        </p>
                     </div>
 
-                    {/* Navigation Links - Stack on mobile, Grid on desktop */}
-                    <div className="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {/* Company Section */}
-                        <div>
-                            <h3 className="font-semibold text-gray-900 mb-3">Company</h3>
-                            <ul className="space-y-2">
-                                <li><Link href="/" className="text-gray-600 hover:text-gray-900 text-sm">Home</Link></li>
-                                <li><Link href="/about" className="text-gray-600 hover:text-gray-900 text-sm">About</Link></li>
-                                <li><Link href="/gallery" className="text-gray-600 hover:text-gray-900 text-sm">Gallery</Link></li>
-                                <li><Link href="/blog" className="text-gray-600 hover:text-gray-900 text-sm">Blog</Link></li>
-                                <li><Link href="/contact" className="text-gray-600 hover:text-gray-900 text-sm">Contact</Link></li>
-                            </ul>
-                        </div>
+                    {/* Navigation Links */}
+                    <nav className="flex flex-wrap justify-center gap-8">
+                        {['Home', 'About', 'Gallery', 'Blog', 'Contact'].map((item) => (
+                            <Link
+                                key={item}
+                                href={`/${item.toLowerCase()}`}
+                                className="text-gray-600 hover:text-teal-600 text-sm font-medium transition-colors duration-300 hover:underline decoration-2 underline-offset-4"
+                            >
+                                {item}
+                            </Link>
+                        ))}
+                    </nav>
 
-                        {/* Product Section */}
-                        <div>
-                            <h3 className="font-semibold text-gray-900 mb-3">Product</h3>
-                            <ul className="space-y-2">
-                                <li><Link href="/features" className="text-gray-600 hover:text-gray-900 text-sm">Features</Link></li>
-                                <li><Link href="/integrations" className="text-gray-600 hover:text-gray-900 text-sm">Integrations</Link></li>
-                                <li><Link href="/pricing" className="text-gray-600 hover:text-gray-900 text-sm">Pricing</Link></li>
-                            </ul>
-                        </div>
-
-                        {/* Resources Section */}
-                        <div>
-                            <h3 className="font-semibold text-gray-900 mb-3">Resources</h3>
-                            <ul className="space-y-2">
-                                <li><Link href="/community" className="text-gray-600 hover:text-gray-900 text-sm">Community</Link></li>
-                                <li><Link href="/contact" className="text-gray-600 hover:text-gray-900 text-sm">Contact</Link></li>
-                                <li><Link href="/dpa" className="text-gray-600 hover:text-gray-900 text-sm">DPA</Link></li>
-                                <li><Link href="/terms" className="text-gray-600 hover:text-gray-900 text-sm">Terms of service</Link></li>
-                            </ul>
-                        </div>
+                    {/* Social Media */}
+                    <div className="flex gap-5">
+                        {socialMedia.map((item, index) => (
+                            <a
+                                key={index}
+                                href={item.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-500 hover:text-teal-600 transition-colors duration-300 transform hover:scale-110"
+                            >
+                                <item.icon className="text-2xl" />
+                            </a>
+                        ))}
                     </div>
                 </div>
 
-                {/* Bottom Links */}
-                <div className="mt-12 pt-8 border-t border-gray-200">
-                    <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                        <p className="text-sm text-gray-600 mb-4 md:mb-0">© 2024 All rights reserved</p>
-                        <ul className="space-y-2 md:space-y-0 md:flex md:space-x-6">
-                            <li><Link href="/terms" className="text-sm text-gray-600 hover:text-gray-900">Terms of Service</Link></li>
-                            <li><Link href="/privacy" className="text-sm text-gray-600 hover:text-gray-900">Policy service</Link></li>
-                            <li><Link href="/cookie" className="text-sm text-gray-600 hover:text-gray-900">Cookie Policy</Link></li>
-                            <li><Link href="/partners" className="text-sm text-gray-600 hover:text-gray-900">Partners</Link></li>
-                        </ul>
-                    </div>
+                {/* Copyright Section */}
+                <div className="mt-12 pt-8 border-t border-gray-100">
+                    <p className="text-center text-sm text-gray-500 font-medium">
+                        © 2024{' '}
+                        <a
+                            href="https://spacedigitalia.my.id"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-teal-600 hover:text-teal-700 font-semibold transition-colors duration-300"
+                        >
+                            Space Digitalia
+                        </a>
+                        . All rights reserved
+                    </p>
                 </div>
             </div>
         </footer>

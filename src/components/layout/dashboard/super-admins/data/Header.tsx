@@ -14,6 +14,8 @@ import { CgProfile } from "react-icons/cg";
 
 import { MdManageAccounts } from "react-icons/md";
 
+import { TiContacts, TiMessages } from "react-icons/ti";
+
 export const menuItems = [
   {
     label: "Dashboard",
@@ -160,6 +162,18 @@ export const menuItems = [
         href: "/dashboard/super-admins/accounts/users",
       },
     ],
+  },
+
+  {
+    label: "Contact",
+    href: "/dashboard/super-admins/contact",
+    icon: TiContacts,
+  },
+
+  {
+    label: "Message",
+    href: "/dashboard/super-admins/message",
+    icon: TiMessages,
   },
 
   {
