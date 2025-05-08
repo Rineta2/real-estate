@@ -14,35 +14,53 @@ export const contactFormSchema = z.object({
     .string()
     .min(10, "Nomor telepon minimal 10 digit")
     .max(15, "Nomor telepon maksimal 15 digit"),
-  email: z.string().email("Email tidak valid"),
   message: z
     .string()
     .min(10, "Pesan minimal 10 karakter")
     .max(500, "Pesan maksimal 500 karakter"),
+  contactMethod: z.enum(["whatsapp", "phone"], {
+    errorMap: () => ({ message: "Pilih metode kontak" }),
+  }),
 });
 
 // Infer the type from the schema
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 
 // Define message type
-interface MessageData extends ContactFormData {
-  userId: string;
-  photoURL?: string;
+interface MessageData {
+  name: string;
+  phone: string;
+  message: string;
+  contactMethod: "whatsapp" | "phone";
   timestamp: number;
   status: "pending" | "read" | "replied";
 }
 
 // Validation function
 export const validateContactForm = (data: ContactFormData) => {
+  console.log("Validating form data:", data);
+
   try {
     const validatedData = contactFormSchema.parse(data);
+    console.log("Validation passed:", validatedData);
     return { success: true, data: validatedData };
   } catch (error) {
+    console.error("Validation error:", error);
     if (error instanceof z.ZodError) {
       const fieldErrors: Partial<ContactFormData> = {};
       error.errors.forEach((err) => {
         if (err.path[0]) {
-          fieldErrors[err.path[0] as keyof ContactFormData] = err.message;
+          const fieldName = err.path[0].toString();
+          if (fieldName === "contactMethod") {
+            fieldErrors.contactMethod = err.message as
+              | "whatsapp"
+              | "phone"
+              | undefined;
+          } else {
+            fieldErrors[
+              fieldName as keyof Omit<ContactFormData, "contactMethod">
+            ] = err.message;
+          }
         }
       });
       return { success: false, errors: fieldErrors };
@@ -54,7 +72,7 @@ export const validateContactForm = (data: ContactFormData) => {
 // Function to check if user has already sent a message for this property
 export const checkExistingMessage = async (
   propertyId: string,
-  email: string
+  identifier: string
 ): Promise<boolean> => {
   try {
     const messagesRef = ref(
@@ -63,14 +81,14 @@ export const checkExistingMessage = async (
     );
 
     try {
-      // Try using the indexed query first
-      const emailQuery = query(
+      // Check by phone number
+      const phoneQuery = query(
         messagesRef,
-        orderByChild("email"),
-        equalTo(email)
+        orderByChild("phone"),
+        equalTo(identifier)
       );
-      const snapshot = await get(emailQuery);
-      return snapshot.exists();
+      const phoneSnapshot = await get(phoneQuery);
+      return phoneSnapshot.exists();
     } catch (queryError) {
       // If the index is not ready, fall back to fetching all messages
       console.warn("Index not ready, falling back to full fetch:", queryError);
@@ -79,7 +97,7 @@ export const checkExistingMessage = async (
       if (snapshot.exists()) {
         const messages = snapshot.val() as Record<string, MessageData>;
         return Object.values(messages).some(
-          (message) => message.email === email
+          (message) => message.phone === identifier
         );
       }
 
@@ -94,16 +112,16 @@ export const checkExistingMessage = async (
 // Function to submit form data to Firebase
 export const submitContactForm = async (
   propertyId: string,
-  formData: ContactFormData,
-  userId: string,
-  photoURL?: string
+  formData: ContactFormData
 ): Promise<{ success: boolean; error?: string }> => {
   try {
-    // Check if user has already sent a message
+    // Check if user has already sent a message by phone
+    const identifier = formData.phone;
     const hasExistingMessage = await checkExistingMessage(
       propertyId,
-      formData.email
+      identifier
     );
+
     if (hasExistingMessage) {
       return {
         success: false,
@@ -120,12 +138,15 @@ export const submitContactForm = async (
 
     // Prepare the message data
     const messageData: MessageData = {
-      ...formData,
-      userId,
-      photoURL,
+      name: formData.name,
+      phone: formData.phone,
+      message: formData.message,
+      contactMethod: formData.contactMethod,
       timestamp: Date.now(),
       status: "pending", // pending, read, replied
     };
+
+    console.log("Message data to be saved:", messageData);
 
     // Save the message
     await set(newMessageRef, messageData);

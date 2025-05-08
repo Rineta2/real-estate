@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 
-import { useAuth } from '@/utils/context/AuthContext';
-
-import { useRouter } from 'next/navigation';
-
 import toast from 'react-hot-toast';
 
 import { ContactFormData, validateContactForm, submitContactForm } from '@/hooks/pages/properties/[slug]/lib/contactFormValidation';
@@ -14,18 +10,16 @@ interface PropertyContactFormProps {
 }
 
 export default function PropertyContactForm({ propertyTitle, propertySlug }: PropertyContactFormProps) {
-    const { user } = useAuth();
-    const router = useRouter();
     const [formData, setFormData] = useState<ContactFormData>({
         name: '',
         phone: '',
-        email: '',
-        message: ''
+        message: '',
+        contactMethod: 'whatsapp'
     });
     const [errors, setErrors] = useState<Partial<ContactFormData>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
@@ -43,18 +37,20 @@ export default function PropertyContactForm({ propertyTitle, propertySlug }: Pro
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!user) {
-            toast.error('Silakan login terlebih dahulu untuk menghubungi agent');
-            setTimeout(() => {
-                localStorage.setItem('redirectAfterLogin', window.location.pathname);
-                router.push('/signin');
-            }, 1500);
-            return;
-        }
+        const dataToSubmit: ContactFormData = {
+            name: formData.name,
+            phone: formData.phone,
+            message: formData.message,
+            contactMethod: formData.contactMethod
+        };
 
-        const validationResult = validateContactForm(formData);
+        console.log("Form data before validation:", dataToSubmit);
+        const validationResult = validateContactForm(dataToSubmit);
+        console.log("Validation result:", validationResult);
 
         if (!validationResult.success) {
+            // Log specific validation errors
+            console.error("Validation failed with errors:", validationResult.errors);
             setErrors(validationResult.errors || {});
             toast.error('Mohon periksa kembali form Anda');
             return;
@@ -62,7 +58,8 @@ export default function PropertyContactForm({ propertyTitle, propertySlug }: Pro
 
         setIsSubmitting(true);
         try {
-            const result = await submitContactForm(propertySlug, formData, user.uid, user.photoURL);
+            const result = await submitContactForm(propertySlug, dataToSubmit);
+            console.log("Submit result:", result);
 
             if (!result.success) {
                 toast.error(result.error || 'Terjadi kesalahan saat mengirim pesan');
@@ -75,12 +72,13 @@ export default function PropertyContactForm({ propertyTitle, propertySlug }: Pro
             setFormData({
                 name: '',
                 phone: '',
-                email: '',
-                message: ''
+                message: '',
+                contactMethod: 'whatsapp'
             });
             setErrors({});
 
-        } catch {
+        } catch (error) {
+            console.error("Form submission error:", error);
             toast.error('Terjadi kesalahan saat mengirim pesan');
         } finally {
             setIsSubmitting(false);
@@ -105,31 +103,40 @@ export default function PropertyContactForm({ propertyTitle, propertySlug }: Pro
                     onChange={handleInputChange}
                     placeholder="Name"
                     className={`block w-full rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-200'} focus:border-yellow-500 focus:ring-yellow-500 p-3 sm:p-4 text-sm sm:text-base`}
+                    required
                 />
                 {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
             </div>
+            <div>
+                <select
+                    name="contactMethod"
+                    value={formData.contactMethod}
+                    onChange={handleInputChange}
+                    className={`block w-full rounded-lg border ${errors.contactMethod ? 'border-red-500' : 'border-gray-200'} focus:border-yellow-500 focus:ring-yellow-500 p-3 sm:p-4 text-sm sm:text-base`}
+                    required
+                >
+                    <option value="whatsapp">WhatsApp</option>
+                    <option value="phone">Phone Call</option>
+                </select>
+                {errors.contactMethod && <p className="mt-1 text-sm text-red-500">{errors.contactMethod}</p>}
+            </div>
+
             <div>
                 <input
                     type="text"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="Phone"
+                    placeholder={formData.contactMethod === 'whatsapp' ? "WhatsApp Number" : "Phone Number"}
                     className={`block w-full rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-200'} focus:border-yellow-500 focus:ring-yellow-500 p-3 sm:p-4 text-sm sm:text-base`}
+                    required
                 />
                 {errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
+                {formData.contactMethod === 'whatsapp' && (
+                    <p className="mt-1 text-xs text-gray-500">Include country code (e.g., +62812345678)</p>
+                )}
             </div>
-            <div>
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Email"
-                    className={`block w-full rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-200'} focus:border-yellow-500 focus:ring-yellow-500 p-3 sm:p-4 text-sm sm:text-base`}
-                />
-                {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
-            </div>
+
             <div>
                 <textarea
                     name="message"
@@ -138,6 +145,7 @@ export default function PropertyContactForm({ propertyTitle, propertySlug }: Pro
                     placeholder="Hello, I am interested in..."
                     rows={3}
                     className={`block w-full rounded-lg border ${errors.message ? 'border-red-500' : 'border-gray-200'} focus:border-yellow-500 focus:ring-yellow-500 p-3 sm:p-4 text-sm sm:text-base resize-none`}
+                    required
                 />
                 {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
             </div>
@@ -159,7 +167,7 @@ export default function PropertyContactForm({ propertyTitle, propertySlug }: Pro
                     </>
                 ) : (
                     <>
-                        {user ? 'Learn more' : 'Login to contact'}
+                        Learn more
                         <span className="text-yellow-400 text-lg sm:text-xl">→</span>
                     </>
                 )}

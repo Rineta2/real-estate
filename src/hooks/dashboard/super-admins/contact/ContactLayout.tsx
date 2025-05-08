@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 
-import { motion } from 'framer-motion'
-
 import { ref, onValue, query, orderByChild, update } from 'firebase/database'
 
 import { database } from '@/utils/firebase/firebase'
@@ -140,13 +138,8 @@ export default function ContactLayout() {
     }
 
     return (
-        <section className='min-h-full px-0'>
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="bg-white/90 backdrop-blur-xl rounded-3xl border border-gray-100/50 p-6 md:p-8 transition-all duration-300 z-10"
-            >
+        <section>
+            <div className="bg-white/90 backdrop-blur-xl rounded-3xl border border-gray-100/50 p-6 md:p-8 transition-all duration-300 z-10">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
                     <div className="space-y-2">
                         <h1 className='text-2xl md:text-3xl font-bold'>
@@ -160,7 +153,7 @@ export default function ContactLayout() {
                         Show Filter
                     </button>
                 </div>
-            </motion.div>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {contacts.map((message) => (

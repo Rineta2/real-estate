@@ -49,7 +49,7 @@ export default function GalleryLayout() {
     }
 
     return (
-        <section className='min-h-screen'>
+        <section>
             <div className="flex justify-between items-center py-4 px-6 border-b border-gray-200 bg-primary-50 rounded-md mb-10">
                 <div>
                     <h1 className="text-2xl font-bold">Gallery</h1>
