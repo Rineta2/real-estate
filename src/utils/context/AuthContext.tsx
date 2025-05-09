@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             case Role.ADMIN:
                 return `/dashboard/admins`;
             case Role.USER:
-                return `/dashboard/user`;
+                return `/dashboard/users`;
             default:
                 return '/';
         }
@@ -84,6 +84,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 return userData; // Return userData but don't proceed with login
             }
 
+            // Get Firebase auth token and create session
+            const idToken = await userCredential.user.getIdToken();
+            await fetch('/api/auth/session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ idToken }),
+            });
+
             setUser(userData);
             const welcomeMessage = getWelcomeMessage(userData);
             toast.success(welcomeMessage);
@@ -109,12 +119,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
             await signOut(auth);
             setUser(null);
-            // Hapus semua cookies
-            document.cookie.split(";").forEach((c) => {
-                document.cookie = c
-                    .replace(/^ +/, "")
-                    .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+
+            // Clear the session cookie through an API call
+            await fetch('/api/auth/logout', {
+                method: 'POST',
             });
+
             toast.success('Anda berhasil logout');
         } catch {
             toast.error('Terjadi kesalahan saat logout');
@@ -209,6 +219,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 await signOut(auth);
                 return userData; // Return userData but don't proceed with login
             }
+
+            // Get Firebase auth token and create session
+            const idToken = await result.user.getIdToken();
+            await fetch('/api/auth/session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ idToken }),
+            });
 
             setUser(userData);
             const welcomeMessage = getWelcomeMessage(userData);
