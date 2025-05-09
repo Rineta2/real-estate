@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { UserAccount } from "@/types/Auth";
 
-import { usersService } from "@/hooks/dashboard/super-admins/accounts/users/lib/UsersServer";
+import { usersService } from "@/hooks/dashboard/super-admins/accounts/users/lib/usersService";
 
 import { UserFormData } from "@/hooks/dashboard/super-admins/accounts/users/types/Users";
 

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import UserLayout from "@/hooks/dashboard/super-admins/accounts/users/UsersLayout.tsx";
+import UserLayout from "@/hooks/dashboard/super-admins/accounts/users/UsersLayout";
 
 export const metadata: Metadata = {
     title: "Users | Real Estate",

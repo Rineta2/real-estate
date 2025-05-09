@@ -20,7 +20,7 @@ import { useUsersFilters } from '@/hooks/dashboard/super-admins/accounts/users/l
 
 import { AcountControls } from '@/hooks/dashboard/super-admins/accounts/users/lib/AccountControls';
 
-import FilterControls from '@/hooks/dashboard/super-admins/accounts/users/components/FilterControls';
+import FilterControls from '@/hooks/dashboard/super-admins/accounts/users/components/FilterContent';
 
 export default function UsersContent() {
     const { user } = useAuth();
