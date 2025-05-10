@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import ProfileLayout from "@/hooks/pages/profile/ProfileLayout";
+import ProfileLayout from "@/hooks/dashboard/super-admins/profile/ProfileLayout";
 
 export const metadata: Metadata = {
     title: "Profile | Real Estate",

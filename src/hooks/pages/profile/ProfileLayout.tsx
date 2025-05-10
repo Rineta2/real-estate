@@ -18,13 +18,17 @@ import { format } from 'date-fns';
 
 import { id } from 'date-fns/locale';
 
-import ProfileSkelaton from '@/hooks/dashboard/users/profile/ProfileSkelaton';
+import ProfileSkelaton from '@/hooks/pages/profile/ProfileSkelaton';
 
 import { UserAccount } from "@/types/Auth";
 
 import { FiUser } from 'react-icons/fi';
 
 import { TextInput, Button } from 'flowbite-react';
+
+import Link from 'next/link';
+
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 type TimestampType = {
     seconds: number;
@@ -82,21 +86,22 @@ export default function ProfileContent() {
             if (selectedFile) {
                 try {
                     // Convert to base64
-                    const reader = new FileReader();
-                    reader.readAsDataURL(selectedFile);
+                    const base64Image = await new Promise<string>((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            resolve(reader.result as string);
+                        };
+                        reader.readAsDataURL(selectedFile!);
+                    });
 
-                    reader.onload = async () => {
-                        const base64Image = reader.result as string;
+                    // Upload to ImageKit
+                    const uploadResponse = await imagekitInstance.upload({
+                        file: base64Image,
+                        fileName: `profile-${user.uid}-${Date.now()}`,
+                        folder: '/profile-images'
+                    });
 
-                        // Upload to ImageKit
-                        const uploadResponse = await imagekitInstance.upload({
-                            file: base64Image,
-                            fileName: `profile-${user.uid}-${Date.now()}`,
-                            folder: '/profile-images'
-                        });
-
-                        photoURL = uploadResponse.url;
-                    };
+                    photoURL = uploadResponse.url;
                 } catch (err) {
                     console.error('Error uploading image:', err);
                     toast.error('Gagal mengupload foto');
@@ -189,7 +194,18 @@ export default function ProfileContent() {
     ];
 
     return (
-        <section className="min-h-full">
+        <section className="min-h-full relative">
+            {/* Back Home Button */}
+            <div className="absolute top-6 left-4 z-10 bg-white rounded-full py-2 px-6">
+                <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors duration-200"
+                >
+                    <IoMdArrowRoundBack className="w-5 h-5" />
+                    <span>Kembali ke home</span>
+                </Link>
+            </div>
+
             {/* Header Gradient & Profile Image */}
             <div className="relative">
                 <div className="h-40 bg-gradient-to-r from-indigo-500 to-blue-400 rounded-b-3xl relative overflow-hidden">
