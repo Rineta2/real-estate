@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             case Role.ADMIN:
                 return `/dashboard/admins`;
             case Role.USER:
-                return `/dashboard/users`;
+                return `/profile`;
             default:
                 return '/';
         }

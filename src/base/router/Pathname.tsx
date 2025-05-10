@@ -13,14 +13,11 @@ import { Toaster } from "react-hot-toast";
 const Pathname = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
 
-    const isAdminRoute = pathname?.includes("/super-admins") ||
-        pathname?.includes("/admins") ||
+    const isAdminRoute =
         pathname?.includes("/signin") ||
         pathname?.includes("/signup") ||
         pathname?.includes("/forgot-password") ||
-        pathname?.includes("/payment") ||
-        pathname?.includes("/download") ||
-        pathname?.includes("/checkout") ||
+        pathname?.includes("/profile") ||
         pathname?.includes("/dashboard") || false;
 
     return (

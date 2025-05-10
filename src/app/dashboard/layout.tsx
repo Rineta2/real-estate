@@ -8,8 +8,6 @@ import { useEffect, useState } from "react";
 
 import SuperAdminHeader from "@/components/layout/dashboard/super-admins/Sidebar";
 
-import UserHeader from "@/components/layout/dashboard/user/Header";
-
 import AdminHeader from "@/components/layout/dashboard/admins/Header";
 
 import Header from "@/components/layout/dashboard/Header";
@@ -56,13 +54,6 @@ export default function DashboardLayout({
                 return;
             }
             setCurrentRole(Role.ADMIN);
-        } else if (currentPath.startsWith('/dashboard/user')) {
-            if (!hasRole(Role.USER)) {
-                setIsAuthorized(false);
-                setLoading(false);
-                return;
-            }
-            setCurrentRole(Role.USER);
         } else {
             window.location.href = '/';
             return;
@@ -103,8 +94,6 @@ export default function DashboardLayout({
                 return <SuperAdminHeader onSidebarToggle={setIsSidebarOpen} />;
             case Role.ADMIN:
                 return <AdminHeader onSidebarToggle={setIsSidebarOpen} />;
-            case Role.USER:
-                return <UserHeader onSidebarToggle={setIsSidebarOpen} />;
             default:
                 return null;
         }

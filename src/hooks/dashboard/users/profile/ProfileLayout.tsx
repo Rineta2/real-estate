@@ -39,7 +39,8 @@ export default function ProfileContent() {
     const [isEditing, setIsEditing] = useState(false);
     const [editedProfile, setEditedProfile] = useState<UserAccount | null>(null);
     const [isSaving, setIsSaving] = useState(false);
-    const [uploadingImage, setUploadingImage] = useState(false);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -69,33 +70,54 @@ export default function ProfileContent() {
         setEditedProfile(profile);
     };
 
-    const handleCancel = () => {
-        setIsEditing(false);
-        setEditedProfile(null);
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setEditedProfile(prev => prev ? { ...prev, [name]: value } : null);
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user?.uid || !editedProfile) return;
 
         setIsSaving(true);
         try {
+            let photoURL = editedProfile.photoURL;
+
+            // Handle image upload if there's a selected file
+            if (selectedFile) {
+                try {
+                    // Convert to base64
+                    const reader = new FileReader();
+                    reader.readAsDataURL(selectedFile);
+
+                    reader.onload = async () => {
+                        const base64Image = reader.result as string;
+
+                        // Upload to ImageKit
+                        const uploadResponse = await imagekitInstance.upload({
+                            file: base64Image,
+                            fileName: `profile-${user.uid}-${Date.now()}`,
+                            folder: '/profile-images'
+                        });
+
+                        photoURL = uploadResponse.url;
+                    };
+                } catch (err) {
+                    console.error('Error uploading image:', err);
+                    toast.error('Gagal mengupload foto');
+                    setIsSaving(false);
+                    return;
+                }
+            }
+
             const userRef = doc(db, process.env.NEXT_PUBLIC_COLLECTIONS_ACCOUNTS as string, user.uid);
             const updateData = {
                 displayName: editedProfile.displayName,
                 email: editedProfile.email,
-                photoURL: editedProfile.photoURL,
+                photoURL: photoURL,
                 phoneNumber: editedProfile.phoneNumber,
                 updatedAt: serverTimestamp()
             };
             await updateDoc(userRef, updateData);
-            setProfile(editedProfile);
+            setProfile({ ...editedProfile, photoURL });
             setIsEditing(false);
+            setImagePreview(null);
+            setSelectedFile(null);
             toast.success('Profil berhasil diperbarui');
         } catch (err) {
             console.error('Error updating profile:', err);
@@ -107,44 +129,29 @@ export default function ProfileContent() {
     };
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files || !e.target.files[0] || !user?.uid) return;
+        if (!e.target.files || !e.target.files[0]) return;
 
-        setUploadingImage(true);
-        try {
-            // Convert to base64
-            const reader = new FileReader();
-            reader.readAsDataURL(e.target.files[0]);
+        const file = e.target.files[0];
+        setSelectedFile(file);
 
-            reader.onload = async () => {
-                const base64Image = reader.result as string;
+        // Create preview
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+    };
 
-                // Upload to ImageKit
-                const uploadResponse = await imagekitInstance.upload({
-                    file: base64Image,
-                    fileName: `profile-${user.uid}-${Date.now()}`,
-                    folder: '/profile-images'
-                });
+    const handleCancel = () => {
+        setIsEditing(false);
+        setEditedProfile(null);
+        setImagePreview(null);
+        setSelectedFile(null);
+    };
 
-                // Update profile with new image URL
-                const userRef = doc(db, process.env.NEXT_PUBLIC_COLLECTIONS_ACCOUNTS as string, user.uid);
-                await updateDoc(userRef, {
-                    photoURL: uploadResponse.url
-                });
-
-                // Update local state
-                setProfile(prev => prev ? { ...prev, photoURL: uploadResponse.url } : null);
-                if (editedProfile) {
-                    setEditedProfile({ ...editedProfile, photoURL: uploadResponse.url });
-                }
-                toast.success('Foto profil berhasil diperbarui');
-            };
-        } catch (err) {
-            console.error('Error uploading image:', err);
-            setError('Failed to upload image');
-            toast.error('Gagal mengupload foto');
-        } finally {
-            setUploadingImage(false);
-        }
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setEditedProfile(prev => prev ? { ...prev, [name]: value } : null);
     };
 
     const formatTimestamp = (timestamp: TimestampType) => {
@@ -175,177 +182,178 @@ export default function ProfileContent() {
         return <div>No profile data available</div>;
     }
 
+    const stats = [
+        { label: 'Role', value: 'User' },
+        { label: 'Member Sejak', value: formatTimestamp(profile.createdAt) },
+        { label: 'Status Account', value: profile.isActive ? 'Aktif' : 'Tidak Aktif' }
+    ];
+
     return (
         <section className="min-h-full">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-300 p-6 mb-8">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div className="space-y-1">
-                        <h1 className='text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent'>
-                            Profil Saya
-                        </h1>
-                        <p className='text-gray-500'>Kelola informasi profil Anda untuk mengontrol, melindungi dan mengamankan akun</p>
-                    </div>
-
-                    {!isEditing && (
-                        <Button
-                            color="purple"
-                            onClick={handleEdit}
-                            size="lg"
-                            className="w-full sm:w-auto bg-primary"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                            </svg>
-                            Edit Profil
-                        </Button>
+            {/* Header Gradient & Profile Image */}
+            <div className="relative">
+                <div className="h-40 bg-gradient-to-r from-indigo-500 to-blue-400 rounded-b-3xl relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-10" style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                        backgroundSize: '30px 30px'
+                    }} />
+                </div>
+                <div className="absolute left-1/2 top-20 transform -translate-x-1/2">
+                    {profile.photoURL ? (
+                        <Image
+                            src={profile.photoURL}
+                            alt="Profile"
+                            width={128}
+                            height={128}
+                            className="rounded-full border-4 border-white shadow-xl w-32 h-32 object-cover bg-white"
+                        />
+                    ) : (
+                        <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                            <FiUser className="w-16 h-16 text-gray-400" />
+                        </div>
                     )}
                 </div>
             </div>
 
-            <div className="bg-white rounded-3xl border border-gray-300 backdrop-blur-xl p-8">
-                <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        {/* Left side - Profile Image */}
-                        <div className="flex flex-col items-center space-y-8 order-1 lg:order-2">
-                            <div className="relative group">
-                                <div className="w-48 h-48 rounded-full overflow-hidden ring-4 ring-indigo-50 shadow-xl">
-                                    {profile.photoURL ? (
-                                        <Image
-                                            src={profile.photoURL}
-                                            alt="Profile"
-                                            width={500}
-                                            height={500}
-                                            className="object-cover w-full h-full transition duration-300 group-hover:scale-110"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                                            <FiUser className="w-16 h-16 text-gray-400" />
-                                        </div>
-                                    )}
+            {/* Name, Info, Stats */}
+            <div className="mt-20 flex flex-col items-center">
+                <h1 className="text-2xl font-bold text-gray-900">{profile.displayName}</h1>
+                <div className="flex gap-6 mt-6">
+                    {stats.map((stat, i) => (
+                        <div key={i} className="bg-white rounded-xl shadow p-4 px-8 text-center min-w-[110px] border border-gray-100">
+                            <div className="text-xl font-bold text-gray-900">{stat.value}</div>
+                            <div className="text-xs text-gray-500 mt-1">{stat.label}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Profile Form */}
+            <div className="max-w-4xl mx-auto mt-12">
+                <div className="bg-white rounded-3xl border border-gray-200 shadow p-8">
+                    <form onSubmit={handleSubmit}>
+                        {/* Profile Fields */}
+                        <div className="space-y-6">
+                            {[{
+                                label: 'Nama',
+                                name: 'displayName',
+                                value: isEditing ? editedProfile?.displayName : profile.displayName,
+                                type: 'text'
+                            }, {
+                                label: 'Email',
+                                value: profile.email,
+                                readOnly: true
+                            }, {
+                                label: 'Nomor Telepon',
+                                name: 'phoneNumber',
+                                value: isEditing ? editedProfile?.phoneNumber : (profile.phoneNumber || '-'),
+                                type: 'tel'
+                            }, {
+                                label: 'Terakhir Diperbarui',
+                                value: formatTimestamp(profile.updatedAt),
+                                readOnly: true
+                            }].map((field, index) => (
+                                <div key={index} className="group p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                    <label className="text-xs font-medium text-gray-600 block mb-1">{field.label}</label>
+                                    <div className="mt-1">
+                                        {isEditing && !field.readOnly ? (
+                                            <TextInput
+                                                type={field.type}
+                                                name={field.name}
+                                                value={field.value || ''}
+                                                onChange={handleChange}
+                                                placeholder={`Masukkan ${field.label}`}
+                                                sizing="lg"
+                                                className="w-full"
+                                            />
+                                        ) : (
+                                            <p className="text-gray-800 text-base">{field.value}</p>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="text-center w-full">
-                                {isEditing && (
-                                    <>
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleImageUpload}
-                                            className="hidden"
-                                            id="profile-image-upload"
-                                            disabled={uploadingImage}
-                                        />
-                                        <label
-                                            htmlFor="profile-image-upload"
-                                            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-indigo-600 
-                                                rounded-xl hover:bg-indigo-50 transition-all duration-300 font-medium 
-                                                border-2 border-indigo-100 hover:border-indigo-200 shadow-sm
-                                                active:scale-95"
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                            {uploadingImage ? 'Mengupload...' : 'Ubah Foto'}
-                                        </label>
-                                    </>
+                            ))}
+                        </div>
+
+                        {/* Profile Image Upload (edit mode only) */}
+                        {isEditing && (
+                            <div className="flex flex-col items-center justify-center mt-8">
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    className="hidden"
+                                    id="profile-image-upload"
+                                />
+                                <label
+                                    htmlFor="profile-image-upload"
+                                    className={`inline-flex items-center gap-2 px-6 py-3 bg-white text-indigo-600 
+                                            rounded-xl hover:bg-indigo-50 transition-all duration-300 font-medium 
+                                            border-2 border-indigo-100 hover:border-indigo-200 shadow-sm
+                                            active:scale-95 cursor-pointer ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    style={{ pointerEvents: isSaving ? 'none' : 'auto' }}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    {isSaving ? 'Mengupload...' : 'Pilih Foto'}
+                                </label>
+
+                                {imagePreview && (
+                                    <div className="mt-4 flex flex-col items-center">
+                                        <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                                            <Image
+                                                src={imagePreview}
+                                                alt="Preview"
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                    </div>
                                 )}
-                                <p className="text-sm text-gray-500 mt-4">
-                                    Ukuran gambar: maks. 1 MB
-                                    <br />
-                                    Format gambar: JPEG, PNG
+
+                                <p className="text-xs text-gray-400 mt-4">
+                                    Ukuran gambar: maks. 1 MB<br />Format gambar: JPEG, PNG
                                 </p>
                             </div>
-                        </div>
+                        )}
 
-                        {/* Right side - Form Fields */}
-                        <div className="lg:col-span-2 order-2 lg:order-1">
-                            <div className="space-y-6">
-                                {[
-                                    {
-                                        label: 'Nama',
-                                        name: 'displayName',
-                                        value: isEditing ? editedProfile?.displayName : profile.displayName,
-                                        type: 'text'
-                                    },
-                                    {
-                                        label: 'Email',
-                                        value: profile.email,
-                                        readOnly: true
-                                    },
-                                    {
-                                        label: 'Nomor Telepon',
-                                        name: 'phoneNumber',
-                                        value: isEditing ? editedProfile?.phoneNumber : (profile.phoneNumber || '-'),
-                                        type: 'tel'
-                                    },
-                                    {
-                                        label: 'Status Akun',
-                                        value: profile.isActive ? 'Aktif' : 'Tidak Aktif',
-                                        isStatus: true
-                                    },
-                                    {
-                                        label: 'Member Sejak',
-                                        value: formatTimestamp(profile.createdAt),
-                                        readOnly: true
-                                    }
-                                ].map((field, index) => (
-                                    <div
-                                        key={index}
-                                        className="group p-6 bg-gray-50/50 rounded-2xl hover:bg-white transition duration-300 
-                                            hover:shadow-lg hover:shadow-gray-100/50 border border-gray-300"
-                                    >
-                                        <label className="text-sm font-medium text-gray-600 block mb-2">{field.label}</label>
-                                        <div className="mt-1">
-                                            {field.isStatus ? (
-                                                <div className="flex items-center gap-2">
-                                                    <div className={`w-2.5 h-2.5 rounded-full ${profile.isActive ?
-                                                        'bg-green-500' : 'bg-red-500'}`}>
-                                                    </div>
-                                                    <p className="text-gray-800 text-lg">{field.value}</p>
-                                                </div>
-                                            ) : isEditing && !field.readOnly ? (
-                                                <TextInput
-                                                    type={field.type}
-                                                    name={field.name}
-                                                    value={field.value || ''}
-                                                    onChange={handleChange}
-                                                    placeholder={`Masukkan ${field.label}`}
-                                                    sizing="lg"
-                                                    className="w-full"
-                                                />
-                                            ) : (
-                                                <p className="text-gray-800 text-lg">{field.value}</p>
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
-
-                                {isEditing && (
-                                    <div className="mt-8 flex flex-col sm:flex-row justify-end gap-4">
-                                        <Button
-                                            color="gray"
-                                            onClick={handleCancel}
-                                            disabled={isSaving}
-                                            size="lg"
-                                            className="w-full sm:w-auto bg-gray-500"
-                                        >
-                                            Batal
-                                        </Button>
-                                        <Button
-                                            color="purple"
-                                            type="submit"
-                                            disabled={isSaving}
-                                            size="lg"
-                                            className="w-full sm:w-auto bg-primary"
-                                        >
-                                            {isSaving ? 'Menyimpan...' : 'Simpan'}
-                                        </Button>
-                                    </div>
-                                )}
+                        {isEditing && (
+                            <div className="mt-8 flex flex-col sm:flex-row justify-end gap-4">
+                                <Button
+                                    color="gray"
+                                    onClick={handleCancel}
+                                    disabled={isSaving}
+                                    size="lg"
+                                    className="w-full sm:w-auto bg-gray-500"
+                                >
+                                    Batal
+                                </Button>
+                                <Button
+                                    color="purple"
+                                    type="submit"
+                                    disabled={isSaving}
+                                    size="lg"
+                                    className="w-full sm:w-auto bg-primary"
+                                >
+                                    {isSaving ? 'Menyimpan...' : 'Simpan'}
+                                </Button>
                             </div>
+                        )}
+                    </form>
+
+                    {!isEditing && (
+                        <div className="flex justify-center mt-6">
+                            <Button
+                                color="purple"
+                                onClick={handleEdit}
+                                size="lg"
+                                className="bg-primary"
+                            >
+                                Edit Profil
+                            </Button>
                         </div>
-                    </div>
-                </form>
+                    )}
+                </div>
             </div>
         </section>
     );
