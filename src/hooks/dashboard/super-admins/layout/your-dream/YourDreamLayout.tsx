@@ -126,7 +126,7 @@ export default function FeaturedLayout() {
     }
 
     return (
-        <section>
+        <section className="min-h-full">
             <div className="flex justify-between items-center py-4 px-6 border-b border-gray-200 bg-primary-50 rounded-md mb-10" >
                 <div>
                     <h1 className="text-2xl font-bold">Your Dream</h1>

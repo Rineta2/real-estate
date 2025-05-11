@@ -26,6 +26,26 @@ interface SubMenuItem {
 export default function SuperAdminHeader({ onSidebarToggle }: HeaderProps) {
     const pathname = usePathname();
     const [activeDropdown, setActiveDropdown] = React.useState<number | null>(null);
+    const [temperature, setTemperature] = React.useState<number | null>(null);
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        const fetchTemperature = async () => {
+            try {
+                const response = await fetch(
+                    `https://api.weatherapi.com/v1/current.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=Jakarta`
+                );
+                const data = await response.json();
+                setTemperature(data.current.temp_c);
+            } catch (error) {
+                console.error('Error fetching temperature:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTemperature();
+    }, []);
 
     const handleLinkClick = () => {
         onSidebarToggle(false);
@@ -149,7 +169,9 @@ export default function SuperAdminHeader({ onSidebarToggle }: HeaderProps) {
                             <p className="text-sm text-gray-600">Living Room Temperature</p>
                             <div className="flex items-center gap-2 mt-1">
                                 <FaTemperatureHigh className="w-5 h-5 text-secondary-500" />
-                                <span className="text-2xl font-semibold text-gray-900">{25}°C</span>
+                                <span className="text-2xl font-semibold text-gray-900">
+                                    {loading ? 'Loading...' : temperature ? `${Math.round(temperature)}°C` : 'N/A'}
+                                </span>
                             </div>
                         </div>
                         <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">

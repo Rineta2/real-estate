@@ -106,7 +106,7 @@ export default function HomeLayout() {
     }
 
     return (
-        <section className='min-h-screen'>
+        <section className="min-h-full">
             <div className="flex justify-between items-center py-4 px-6 border-b border-gray-200 bg-primary-50 rounded-md mb-10" >
                 <div>
                     <h1 className="text-2xl font-bold">Faqs</h1>
