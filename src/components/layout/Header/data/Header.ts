@@ -1,10 +1,9 @@
 import {
   FaFacebookF,
-  FaTwitter,
   FaInstagram,
   FaTiktok,
   FaLinkedinIn,
-  FaPinterestP,
+  FaYoutube,
 } from "react-icons/fa";
 
 export const menuHamburger = [
@@ -41,26 +40,22 @@ export const menuHamburger = [
 export const socialMedia = [
   {
     icon: FaFacebookF,
-    href: "https://www.facebook.com/profile.php?id=61573748215102&mibextid=ZbWKwL",
-  },
-  {
-    icon: FaTwitter,
-    href: "https://twitter.com",
+    href: "https://www.facebook.com/rizki.ramadhan.419859/",
   },
   {
     icon: FaInstagram,
-    href: "https://www.instagram.com/spacedigitalia/?igsh=MWhucmN5bXl1YnViZQ%3D%3D#",
+    href: "https://www.instagram.com/rzkir.20",
   },
   {
     icon: FaTiktok,
-    href: "https://www.tiktok.com/@spacedigitalia?_t=ZS-8uKNO1JcPod&_r=1",
+    href: "https://www.tiktok.com/@rzkir.20",
   },
   {
     icon: FaLinkedinIn,
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/in/rizki-ramadhan12",
   },
   {
-    icon: FaPinterestP,
-    href: "https://pinterest.com",
+    icon: FaYoutube,
+    href: "https://www.youtube.com/@codingwithrizki",
   },
 ];
