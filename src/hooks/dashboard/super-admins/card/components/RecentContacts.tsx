@@ -1,9 +1,6 @@
 import React from 'react';
-import { ContactMessage } from '../types/dashboard';
 
-interface RecentContactsProps {
-    contacts: ContactMessage[];
-}
+import { RecentContactsProps } from '@/hooks/dashboard/super-admins/card/types/dashboard';
 
 export default function RecentContacts({ contacts }: RecentContactsProps) {
     return (

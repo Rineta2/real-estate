@@ -1,16 +1,8 @@
 import React from 'react';
+
 import { HiUsers, HiShieldCheck, HiUserGroup, HiUser } from 'react-icons/hi';
 
-interface DashboardCardProps {
-    title: string;
-    value: string | number;
-    icon: React.ReactNode;
-    color: string;
-    trend?: {
-        value: number;
-        isPositive: boolean;
-    };
-}
+import { DashboardCardProps, DashboardCardsProps } from "@/hooks/dashboard/super-admins/card/types/dashboard"
 
 const DashboardCard: React.FC<DashboardCardProps> = ({ title, value, icon, color, trend }) => {
     return (
@@ -32,15 +24,6 @@ const DashboardCard: React.FC<DashboardCardProps> = ({ title, value, icon, color
         </div>
     );
 };
-
-interface DashboardCardsProps {
-    userStats: {
-        total: number;
-        superAdmins: number;
-        admins: number;
-        regularUsers: number;
-    };
-}
 
 export default function DashboardCards({ userStats }: DashboardCardsProps) {
     const cards = [

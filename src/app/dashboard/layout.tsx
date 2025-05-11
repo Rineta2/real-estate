@@ -16,6 +16,8 @@ import AccessDenied from "@/components/layout/dashboard/AccessDenied";
 
 import { HiX } from "react-icons/hi";
 
+import { usePropertiesData } from "@/hooks/dashboard/super-admins/properties/properties/lib/FetchProperties";
+
 export default function DashboardLayout({
     children,
 }: {
@@ -31,6 +33,7 @@ export default function DashboardLayout({
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [currentRole, setCurrentRole] = useState<Role | null>(null);
     const [loading, setLoading] = useState(true);
+    const { properties, isLoading: isLoadingProperties } = usePropertiesData();
 
     useEffect(() => {
         if (!user) {
@@ -76,7 +79,7 @@ export default function DashboardLayout({
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    if (loading) {
+    if (loading || isLoadingProperties) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-50">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
@@ -131,7 +134,7 @@ export default function DashboardLayout({
             {/* Main content */}
             <div className="flex-1 flex flex-col min-h-screen lg:ml-80">
                 {/* Header */}
-                <Header onMenuClick={toggleSidebar} />
+                <Header onMenuClick={toggleSidebar} properties={properties} />
 
                 {/* Page content */}
                 <main className="flex-1 px-4 py-4 overflow-x-hidden">

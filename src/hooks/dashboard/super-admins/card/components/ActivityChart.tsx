@@ -1,12 +1,10 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
-import { ChartData } from '../types/dashboard';
-import { chartOptions } from '../config/chart';
 
-interface ActivityChartProps {
-    chartData: ChartData;
-    isLoading: boolean;
-}
+import { Line } from 'react-chartjs-2';
+
+import { ActivityChartProps } from '@/hooks/dashboard/super-admins/card/types/dashboard';
+
+import { chartOptions } from '@/hooks/dashboard/super-admins/card/config/chart';
 
 export default function ActivityChart({ chartData, isLoading }: ActivityChartProps) {
     return (

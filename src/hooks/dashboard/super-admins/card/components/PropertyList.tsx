@@ -1,15 +1,10 @@
 import React from 'react';
-import Image from 'next/image';
-import { format } from 'date-fns';
-import { Properties } from '../../properties/properties/types/properties';
 
-interface PropertyListProps {
-    properties: Properties[];
-    filteredProperties: Properties[];
-    propertyId: string;
-    setPropertyId: (id: string) => void;
-    isLoading: boolean;
-}
+import Image from 'next/image';
+
+import { format } from 'date-fns';
+
+import { PropertyListProps } from "@/hooks/dashboard/super-admins/card/types/dashboard"
 
 export default function PropertyList({ properties, filteredProperties, propertyId, setPropertyId, isLoading }: PropertyListProps) {
     return (

@@ -1,9 +1,6 @@
 import React from 'react';
-import { Message } from '../types/dashboard';
 
-interface RecentMessagesProps {
-    messages: Message[];
-}
+import { RecentMessagesProps } from '@/hooks/dashboard/super-admins/card/types/dashboard';
 
 export default function RecentMessages({ messages }: RecentMessagesProps) {
     return (

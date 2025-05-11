@@ -1,8 +1,16 @@
 import { useState, useEffect } from "react";
+
 import { ref, query, orderByChild, onValue } from "firebase/database";
+
 import { database } from "@/utils/firebase/firebase";
+
 import { toast } from "react-hot-toast";
-import { ContactMessage, FirebaseContactMessage } from "../types/dashboard";
+
+import {
+  ContactMessage,
+  FirebaseContactMessage,
+} from "@/hooks/dashboard/super-admins/card/types/dashboard";
+
 import { User } from "firebase/auth";
 
 export function useContacts(user: User | null) {

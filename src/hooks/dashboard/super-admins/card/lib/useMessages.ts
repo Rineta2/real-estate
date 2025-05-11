@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
-import { ref, get } from "firebase/database";
-import { database } from "@/utils/firebase/firebase";
-import { toast } from "react-hot-toast";
-import { Message } from "../types/dashboard";
-import { Properties } from "../../properties/properties/types/properties";
-import { User } from "firebase/auth";
 
-export function useMessages(user: User | null, properties: Properties[]) {
+import { ref, get } from "firebase/database";
+
+import { database } from "@/utils/firebase/firebase";
+
+import { toast } from "react-hot-toast";
+
+import { Message } from "@/hooks/dashboard/super-admins/card/types/dashboard";
+
+import { Properties } from "@/hooks/dashboard/super-admins/properties/properties/types/properties";
+
+import { User } from "firebase/auth";
+import { UserAccount } from "@/types/Auth";
+
+type UserType = User | UserAccount;
+
+export function useMessages(user: UserType | null, properties: Properties[]) {
   const [recentMessages, setRecentMessages] = useState<Message[]>([]);
 
   useEffect(() => {

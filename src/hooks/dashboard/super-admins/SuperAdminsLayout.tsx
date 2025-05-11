@@ -10,13 +10,13 @@ import { auth } from '@/utils/firebase/firebase';
 
 import SuperAdminsSkelaton from "@/hooks/dashboard/super-admins/SuperAdminsSkelaton";
 
-import RecentContacts from './card/components/RecentContacts';
+import RecentContacts from '@/hooks/dashboard/super-admins/card/components/RecentContacts';
 
-import RecentMessages from './card/components/RecentMessages';
+import RecentMessages from '@/hooks/dashboard/super-admins/card/components/RecentMessages';
 
-import ActivityChart from './card/components/ActivityChart';
+import ActivityChart from '@/hooks/dashboard/super-admins/card/components/ActivityChart';
 
-import PropertyList from './card/components/PropertyList';
+import PropertyList from '@/hooks/dashboard/super-admins/card/components/PropertyList';
 
 import {
     Chart as ChartJS,
@@ -30,13 +30,13 @@ import {
     Filler
 } from 'chart.js';
 
-import { useChartData } from './card/hooks/useChartData';
+import { useChartData } from '@/hooks/dashboard/super-admins/card/lib/useChartData'
 
-import { useMessages } from './card/hooks/useMessages';
+import { useMessages } from '@/hooks/dashboard/super-admins/card/lib/useMessages';
 
-import { useContacts } from './card/hooks/useContacts';
+import { useContacts } from '@/hooks/dashboard/super-admins/card/lib/useContacts';
 
-import { useProperties } from './card/hooks/useProperties';
+import { useProperties } from '@/hooks/dashboard/super-admins/card/lib/useProperties';
 
 ChartJS.register(
     CategoryScale,

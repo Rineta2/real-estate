@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Properties } from "../../properties/properties/types/properties";
+
+import { Properties } from "@/hooks/dashboard/super-admins/properties/properties/types/properties";
 
 export function useProperties(properties: Properties[]) {
   const [filteredProperties, setFilteredProperties] = useState<Properties[]>(

@@ -1,3 +1,5 @@
+import { Properties } from "@/hooks/dashboard/super-admins/properties/properties/types/properties";
+
 export interface ChartData {
   labels: string[];
   datasets: {
@@ -42,4 +44,45 @@ export interface UserStats {
   superAdmins: number;
   admins: number;
   regularUsers: number;
+}
+
+export interface ActivityChartProps {
+  chartData: ChartData;
+  isLoading: boolean;
+}
+
+export interface PropertyListProps {
+  properties: Properties[];
+  filteredProperties: Properties[];
+  propertyId: string;
+  setPropertyId: (id: string) => void;
+  isLoading: boolean;
+}
+
+export interface RecentContactsProps {
+  contacts: ContactMessage[];
+}
+
+export interface RecentMessagesProps {
+  messages: Message[];
+}
+
+export interface DashboardCardProps {
+  title: string;
+  value: string | number;
+  icon: React.ReactNode;
+  color: string;
+  trend?: {
+    value: number;
+    isPositive: boolean;
+  };
+}
+
+export interface DashboardCardsProps {
+  userStats: {
+    total: number;
+    superAdmins: number;
+    admins: number;
+    regularUsers: number;
+  };
 }

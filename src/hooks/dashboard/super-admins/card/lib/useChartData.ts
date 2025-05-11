@@ -10,11 +10,11 @@ import { format } from "date-fns";
 
 import { toast } from "react-hot-toast";
 
-import { ChartData } from "../types/dashboard";
+import { ChartData } from "@/hooks/dashboard/super-admins/card/types/dashboard";
 
-import { initialChartData } from "../config/chart";
+import { initialChartData } from "@/hooks/dashboard/super-admins/card/config/chart";
 
-import { Properties } from "../../properties/properties/types/properties";
+import { Properties } from "@/hooks/dashboard/super-admins/properties/properties/types/properties";
 
 import { UserAccount, Role } from "@/types/Auth";
 
