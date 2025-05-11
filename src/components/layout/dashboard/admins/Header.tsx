@@ -1,173 +1,84 @@
 import React from 'react';
-import { useAuth } from '@/utils/context/AuthContext';
+
 import { usePathname } from 'next/navigation';
+
 import Link from 'next/link';
-import { FiLogOut } from 'react-icons/fi';
-import { FaRegUser } from "react-icons/fa";
-import { Sidebar, Avatar } from 'flowbite-react';
-import { menuItems, MenuItem } from '@/components/layout/dashboard/admins/data/Header';
+
+import { menuItems } from '@/components/layout/dashboard/admins/data/Header';
+
+import { FaTemperatureHigh } from "react-icons/fa";
 
 interface HeaderProps {
     onSidebarToggle: (isOpen: boolean) => void;
 }
 
-export default function AdminHeader({ onSidebarToggle }: HeaderProps) {
-    const { user, logout } = useAuth();
+export default function SuperAdminHeader({ onSidebarToggle }: HeaderProps) {
     const pathname = usePathname();
-    const [activeDropdown, setActiveDropdown] = React.useState<number | null>(null);
 
     const handleLinkClick = () => {
         onSidebarToggle(false);
-        setActiveDropdown(null);
     };
 
     const isLinkActive = (href: string) => {
-        const normalizedPathname = pathname?.replace(/\/$/, '') ?? '';
-        const normalizedHref = href.replace(/\/$/, '');
-
         if (href === '/') {
+            return pathname === '/';
+        }
+        if (href === '/dashboard/admins') {
             return pathname === href;
         }
-
-        if (normalizedHref === '/dashboard/admins') {
-            return normalizedPathname === normalizedHref;
-        }
-
-        const menuItem = menuItems.find(item => item.href === href);
-        if (menuItem?.subItems) {
-            return normalizedPathname === normalizedHref;
-        }
-
-        return normalizedPathname.startsWith(normalizedHref);
-    };
-
-    const toggleDropdown = (index: number) => {
-        setActiveDropdown(activeDropdown === index ? null : index);
+        return pathname === href || pathname.startsWith(href + '/');
     };
 
     return (
-        <Sidebar className="w-full h-full bg-white">
-            <div className="flex h-full flex-col justify-between py-2">
-                <div>
-                    {/* Logo */}
-                    <div className="mb-5 flex items-center justify-center">
-                        <Link href="/" className="flex items-center">
-                            <span className="self-center whitespace-nowrap text-xl font-semibold text-gray-900">
-                                Real Estate
-                            </span>
-                        </Link>
-                    </div>
+        <div className="flex flex-col h-full bg-white">
+            {/* Logo Section */}
+            <div className="p-6 border-b border-gray-100">
+                <span className="text-xl font-semibold text-gray-900">
+                    Real Estate
+                </span>
+            </div>
 
-                    {/* Profile Section */}
-                    <div className="mb-5 px-4">
-                        <div className="flex items-center gap-3">
-                            {user?.photoURL ? (
-                                <Avatar
-                                    img={user.photoURL}
-                                    alt="Profile"
-                                    rounded
-                                    size="md"
-                                />
-                            ) : (
-                                <Avatar
-                                    alt="Profile"
-                                    rounded
-                                    size="md"
-                                >
-                                    <FaRegUser className="w-5 h-5" />
-                                </Avatar>
-                            )}
-                            <div className="flex flex-col items-start">
-                                <span className="text-sm font-medium text-gray-900">
-                                    {user?.displayName || 'Admin'}
-                                </span>
-                                <span className="text-xs text-gray-500">
-                                    Admin
-                                </span>
-                            </div>
-                            <button
-                                onClick={logout}
-                                className="ml-auto p-2 text-gray-500 hover:text-gray-700"
+            {/* Navigation */}
+            <nav className="flex-1 px-3 py-4 overflow-y-auto">
+                <ul className="space-y-4">
+                    {menuItems.map((item, index) => (
+                        <li key={index}>
+                            <Link
+                                href={item.href}
+                                onClick={handleLinkClick}
+                                className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 ${isLinkActive(item.href)
+                                    ? 'bg-primary text-white'
+                                    : 'hover:bg-gray-50'
+                                    }`}
                             >
-                                <FiLogOut className="w-5 h-5" />
-                            </button>
-                        </div>
-                    </div>
+                                <item.icon className={`w-5 h-5 ${isLinkActive(item.href) ? 'text-white' : 'text-gray-500'
+                                    }`} />
+                                <span className="text-sm font-medium">{item.label}</span>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
 
-                    {/* Navigation */}
-                    <div className="px-3 py-4">
-                        <ul className="space-y-2">
-                            {menuItems.map((item: MenuItem, index: number) => (
-                                <li key={index}>
-                                    {item.subItems ? (
-                                        <div>
-                                            <button
-                                                onClick={() => toggleDropdown(index)}
-                                                className={`flex w-full items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200 ${activeDropdown === index
-                                                    ? 'bg-gray-100'
-                                                    : 'hover:bg-gray-100'
-                                                    }`}
-                                            >
-                                                <div className="flex items-center gap-3">
-                                                    <item.icon className="w-5 h-5" />
-                                                    <span className="text-sm font-medium">{item.label}</span>
-                                                </div>
-                                                <svg
-                                                    className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === index ? 'rotate-180' : ''
-                                                        }`}
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M19 9l-7 7-7-7"
-                                                    />
-                                                </svg>
-                                            </button>
-                                            <div
-                                                className={`overflow-hidden transition-all duration-200 ${activeDropdown === index ? 'max-h-96' : 'max-h-0'
-                                                    }`}
-                                            >
-                                                <ul className="mt-1 ml-4 space-y-1">
-                                                    {item.subItems.map((subItem, subIndex: number) => (
-                                                        <li key={subIndex}>
-                                                            <Link
-                                                                href={subItem.href}
-                                                                onClick={handleLinkClick}
-                                                                className={`block p-3 text-sm rounded-xl transition-all duration-200 ${isLinkActive(subItem.href)
-                                                                    ? 'bg-primary-50 text-primary'
-                                                                    : 'hover:bg-gray-50'
-                                                                    }`}
-                                                            >
-                                                                {subItem.label}
-                                                            </Link>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <Link
-                                            href={item.href}
-                                            onClick={handleLinkClick}
-                                            className={`flex items-center gap-3 py-2 px-3 rounded-lg transition-all duration-200 ${isLinkActive(item.href)
-                                                ? 'bg-primary text-white'
-                                                : 'hover:bg-gray-100'
-                                                }`}
-                                        >
-                                            <item.icon className="w-5 h-5" />
-                                            <span className="text-sm font-medium">{item.label}</span>
-                                        </Link>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
+            {/* Temperature Widget */}
+            <div className="px-6 py-4">
+                <div className="p-4 rounded-2xl bg-gradient-to-r from-secondary-50 to-secondary-100">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <p className="text-sm text-gray-600">Living Room Temperature</p>
+                            <div className="flex items-center gap-2 mt-1">
+                                <FaTemperatureHigh className="w-5 h-5 text-secondary-500" />
+                                <span className="text-2xl font-semibold text-gray-900">{25}°C</span>
+                            </div>
+                        </div>
+                        <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+                            <div className="w-8 h-8 rounded-full bg-secondary-100 flex items-center justify-center">
+                                <div className="w-4 h-4 rounded-full bg-secondary-500" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </Sidebar>
+        </div>
     );
-} 
+}

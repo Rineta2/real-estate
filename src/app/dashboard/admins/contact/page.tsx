@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 
-import ContactLayout from "@/hooks/dashboard/super-admins/contact/ContactLayout";
+import ContactLayout from "@/hooks/dashboard/admins/contact/ContactLayout";
 
 export const metadata: Metadata = {
     title: "Gallery | Real Estate",
-    description: "Halaman gallery untuk super admin",
+    description: "Halaman gallery untuk admins",
 }
 
 export default function Page() {

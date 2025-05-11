@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import BlogLayout from "@/hooks/dashboard/super-admins/blog/blog/BlogLayout";
+import BlogLayout from "@/hooks/dashboard/admins/blog/BlogLayout";
 
 export const metadata: Metadata = {
     title: "Blog | Real Estate",

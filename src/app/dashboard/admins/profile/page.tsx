@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 
-import ProfileLayout from "@/hooks/dashboard/super-admins/profile/ProfileLayout";
+import ProfileLayout from "@/hooks/dashboard/admins/profile/ProfileLayout";
 
 export const metadata: Metadata = {
     title: "Profile | Real Estate",
-    description: "Halaman profile untuk super admin",
+    description: "Halaman profile untuk admins",
 }
 
 export default function Page() {

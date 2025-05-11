@@ -6,15 +6,15 @@ import { ref, onValue, query, orderByChild, update } from 'firebase/database'
 
 import { database } from '@/utils/firebase/firebase'
 
-import { Contacts } from '@/hooks/dashboard/super-admins/contact/types/Contact'
+import { Contacts } from '@/hooks/dashboard/admins/contact/types/Contact'
 
-import ContactSkelaton from "@/hooks/dashboard/super-admins/contact/ContactSkelaton"
+import ContactSkelaton from "@/hooks/dashboard/admins/contact/ContactSkelaton"
 
-import ContactCard from '@/hooks/dashboard/super-admins/contact/components/ContactCard'
+import ContactCard from '@/hooks/dashboard/admins/contact/components/ContactCard'
 
-import ViewMessageModal from '@/hooks/dashboard/super-admins/contact/components/ViewMessageModal'
+import ViewMessageModal from '@/hooks/dashboard/admins/contact/components/ViewMessageModal'
 
-import ReplyModal from '@/hooks/dashboard/super-admins/contact/components/ReplyModal'
+import ReplyModal from '@/hooks/dashboard/admins/contact/components/ReplyModal'
 
 import { toast } from 'react-hot-toast'
 
@@ -150,15 +150,15 @@ export default function ContactLayout() {
         <section>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 px-3 sm:px-6 border-b border-gray-200 bg-primary-50 rounded-md mb-6">
                 <div className="mb-3 sm:mb-0">
-                    <h1 className="text-xl sm:text-2xl font-bold">Message</h1>
+                    <h1 className="text-xl sm:text-2xl font-bold">Contact</h1>
                     <ul className="flex items-center gap-2">
-                        <li className="text-xs sm:text-sm font-medium"><a href="/dashboard/super-admins">Dashboard</a></li>
+                        <li className="text-xs sm:text-sm font-medium"><a href="/dashboard/admins">Dashboard</a></li>
                         <li className="text-xs sm:text-sm font-medium">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3 sm:w-4 sm:h-4">
                                 <path fillRule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clipRule="evenodd" />
                             </svg>
                         </li>
-                        <li className="text-xs sm:text-sm font-medium">Message</li>
+                        <li className="text-xs sm:text-sm font-medium">Contact</li>
                     </ul>
                 </div>
 

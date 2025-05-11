@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import { motion } from 'framer-motion';
 
-import { ViewModalProps } from '@/hooks/dashboard/super-admins/blog/blog/types/Blog';
+import { ViewModalProps } from '@/hooks/dashboard/admins/blog/types/Blog';
 
 export const ViewModal: React.FC<ViewModalProps> = ({ blog, onClose }) => {
     useEffect(() => {
@@ -123,55 +123,55 @@ export const ViewModal: React.FC<ViewModalProps> = ({ blog, onClose }) => {
                                         </h3>
                                         <div
                                             className='prose prose-sm sm:prose-base lg:prose-lg max-w-none 
-                                           prose-headings:text-white 
-                                           prose-p:text-white 
-                                           text-white
-                                           prose-strong:text-white 
-                                           prose-a:text-blue-400 hover:prose-a:text-blue-300
-                                           
-                                           [&_h3]:text-lg sm:[&_h3]:text-xl md:[&_h3]:text-2xl [&_h3]:font-bold [&_h3]:mb-3 sm:[&_h3]:mb-4 [&_h3]:mt-4 sm:[&_h3]:mt-6 md:[&_h3]:mt-8
-                                           
-                                           [&_p]:mb-3 sm:[&_p]:mb-4 [&_p]:leading-relaxed [&_p]:text-sm sm:[&_p]:text-base md:[&_p]:text-lg
-                                           [&_p:empty]:hidden
-                                           
-                                           [&_ol]:pl-0 [&_ol]:list-none [&_ol]:space-y-2 sm:[&_ol]:space-y-3 [&_ol]:my-3 sm:[&_ol]:my-4
-                                           [&_ul]:pl-0 [&_ul]:list-none [&_ul]:space-y-2 sm:[&_ul]:space-y-3 [&_ul]:my-3 sm:[&_ul]:my-4
-                                           
-                                           [&_li]:relative [&_li]:pl-4 sm:[&_li]:pl-5 md:[&_li]:pl-6 [&_li]:text-white [&_li]:text-sm sm:[&_li]:text-base
-                                           
-                                           [&_li[data-list=bullet]]:before:content-["•"]
-                                           [&_li[data-list=bullet]]:before:absolute
-                                           [&_li[data-list=bullet]]:before:left-0
-                                           [&_li[data-list=bullet]]:before:text-white
-                                           [&_li[data-list=bullet]]:before:font-bold
-                                           [&_li[data-list=bullet]]:before:text-base sm:[&_li[data-list=bullet]]:before:text-lg md:[&_li[data-list=bullet]]:before:text-xl
-                                           
-                                           [&_li[data-list=ordered]]:before:absolute
-                                           [&_li[data-list=ordered]]:before:left-0
-                                           [&_li[data-list=ordered]]:before:text-white
-                                           [&_li[data-list=ordered]]:before:font-semibold
-                                           [&_li[data-list=ordered]]:before:counter-reset
-                                           [&_li[data-list=ordered]]:before:content-[counter(list-item)"."]
-                                           
-                                           [&_strong]:text-white [&_strong]:font-semibold
-                                           
-                                           [&_.ql-ui]:hidden
-                                           
-                                           [&_a]:text-blue-400 [&_a]:no-underline hover:[&_a]:underline
-                                           
-                                           [&_blockquote]:border-l-4 [&_blockquote]:border-gray-300 [&_blockquote]:pl-4 [&_blockquote]:my-4 sm:[&_blockquote]:my-6 [&_blockquote]:italic [&_blockquote]:text-white [&_blockquote]:text-base sm:[&_blockquote]:text-lg
-                                           
-                                           [&_img]:my-4 sm:[&_img]:my-6 [&_img]:rounded-lg sm:[&_img]:rounded-xl [&_img]:shadow-md sm:[&_img]:shadow-lg
-                                           
-                                           [&_pre]:bg-gray-100 [&_pre]:p-3 sm:[&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto
-                                           [&_code]:bg-gray-100 [&_code]:px-2 [&_code]:py-1 [&_code]:rounded [&_code]:text-xs sm:[&_code]:text-sm
-                                           [&_pre_code]:bg-transparent [&_pre_code]:p-0
-                                           
-                                           [&_table]:w-full [&_table]:border-collapse [&_table]:my-4
-                                           [&_th]:bg-gray-100 [&_th]:p-2 sm:[&_th]:p-3 [&_th]:text-left [&_th]:border [&_th]:border-gray-300 [&_th]:text-sm sm:[&_th]:text-base
-                                           [&_td]:p-2 sm:[&_td]:p-3 [&_td]:border [&_td]:border-gray-300 [&_td]:text-sm sm:[&_td]:text-base
-                                           
-                                           [&_hr]:my-6 sm:[&_hr]:my-8 [&_hr]:border-gray-200'
+                                             prose-headings:text-white 
+                                             prose-p:text-white 
+                                             text-white
+                                             prose-strong:text-white 
+                                             prose-a:text-blue-400 hover:prose-a:text-blue-300
+                                             
+                                             [&_h3]:text-lg sm:[&_h3]:text-xl md:[&_h3]:text-2xl [&_h3]:font-bold [&_h3]:mb-3 sm:[&_h3]:mb-4 [&_h3]:mt-4 sm:[&_h3]:mt-6 md:[&_h3]:mt-8
+                                             
+                                             [&_p]:mb-3 sm:[&_p]:mb-4 [&_p]:leading-relaxed [&_p]:text-sm sm:[&_p]:text-base md:[&_p]:text-lg
+                                             [&_p:empty]:hidden
+                                             
+                                             [&_ol]:pl-0 [&_ol]:list-none [&_ol]:space-y-2 sm:[&_ol]:space-y-3 [&_ol]:my-3 sm:[&_ol]:my-4
+                                             [&_ul]:pl-0 [&_ul]:list-none [&_ul]:space-y-2 sm:[&_ul]:space-y-3 [&_ul]:my-3 sm:[&_ul]:my-4
+                                             
+                                             [&_li]:relative [&_li]:pl-4 sm:[&_li]:pl-5 md:[&_li]:pl-6 [&_li]:text-white [&_li]:text-sm sm:[&_li]:text-base
+                                             
+                                             [&_li[data-list=bullet]]:before:content-["•"]
+                                             [&_li[data-list=bullet]]:before:absolute
+                                             [&_li[data-list=bullet]]:before:left-0
+                                             [&_li[data-list=bullet]]:before:text-white
+                                             [&_li[data-list=bullet]]:before:font-bold
+                                             [&_li[data-list=bullet]]:before:text-base sm:[&_li[data-list=bullet]]:before:text-lg md:[&_li[data-list=bullet]]:before:text-xl
+                                             
+                                             [&_li[data-list=ordered]]:before:absolute
+                                             [&_li[data-list=ordered]]:before:left-0
+                                             [&_li[data-list=ordered]]:before:text-white
+                                             [&_li[data-list=ordered]]:before:font-semibold
+                                             [&_li[data-list=ordered]]:before:counter-reset
+                                             [&_li[data-list=ordered]]:before:content-[counter(list-item)"."]
+                                             
+                                             [&_strong]:text-white [&_strong]:font-semibold
+                                             
+                                             [&_.ql-ui]:hidden
+                                             
+                                             [&_a]:text-blue-400 [&_a]:no-underline hover:[&_a]:underline
+                                             
+                                             [&_blockquote]:border-l-4 [&_blockquote]:border-gray-300 [&_blockquote]:pl-4 [&_blockquote]:my-4 sm:[&_blockquote]:my-6 [&_blockquote]:italic [&_blockquote]:text-white [&_blockquote]:text-base sm:[&_blockquote]:text-lg
+                                             
+                                             [&_img]:my-4 sm:[&_img]:my-6 [&_img]:rounded-lg sm:[&_img]:rounded-xl [&_img]:shadow-md sm:[&_img]:shadow-lg
+                                             
+                                             [&_pre]:bg-gray-100 [&_pre]:p-3 sm:[&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto
+                                             [&_code]:bg-gray-100 [&_code]:px-2 [&_code]:py-1 [&_code]:rounded [&_code]:text-xs sm:[&_code]:text-sm
+                                             [&_pre_code]:bg-transparent [&_pre_code]:p-0
+                                             
+                                             [&_table]:w-full [&_table]:border-collapse [&_table]:my-4
+                                             [&_th]:bg-gray-100 [&_th]:p-2 sm:[&_th]:p-3 [&_th]:text-left [&_th]:border [&_th]:border-gray-300 [&_th]:text-sm sm:[&_th]:text-base
+                                             [&_td]:p-2 sm:[&_td]:p-3 [&_td]:border [&_td]:border-gray-300 [&_td]:text-sm sm:[&_td]:text-base
+                                             
+                                             [&_hr]:my-6 sm:[&_hr]:my-8 [&_hr]:border-gray-200'
                                             dangerouslySetInnerHTML={{ __html: blog.content }}
                                         />
                                     </div>
