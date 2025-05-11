@@ -57,7 +57,7 @@ export default function PropertiesDetailsContent({ slug }: { slug: string }) {
     if (!filteredBlog) return <PropertiesNotFound />;
 
     return (
-        <section className='min-h-screen pt-20 md:pt-24 py-4 sm:py-6 md:py-8'>
+        <section className='min-h-screen pt-20 md:pt-28 py-4 sm:py-6 md:py-8'>
             <div className="container px-3 sm:px-6 md:px-8 lg:px-14">
                 <PropertyHeader property={filteredBlog} />
 

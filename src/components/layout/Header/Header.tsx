@@ -93,7 +93,7 @@ export default function Header() {
 
     return (
         <header className={`fixed ${isMenuOpen ? 'top-0' : 'top-2'} left-0 right-0 z-50 flex justify-center items-start h-24 px-3 lg:px-12`}>
-            <div className="w-full container mx-auto rounded-xl bg-white shadow-lg px-6 py-3 flex items-center justify-between h-16 relative">
+            <div className="w-full max-w-7xl mx-auto rounded-xl bg-white shadow-lg px-4 py-3 flex items-center justify-between h-16 relative">
                 {/* Hamburger Kiri */}
                 <button
                     onClick={toggleMenu}

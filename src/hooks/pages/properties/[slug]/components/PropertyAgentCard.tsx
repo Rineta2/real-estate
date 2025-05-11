@@ -4,9 +4,12 @@ import Image from 'next/image';
 
 import Link from 'next/link';
 
+import { FormatSlug } from '@/base/helper/FormatSlug';
+
 interface Agent {
     name?: string;
     photoURL?: string;
+    uid?: string;
 }
 
 interface PropertyAgentCardProps {
@@ -28,7 +31,7 @@ export default function PropertyAgentCard({ agent }: PropertyAgentCardProps) {
                 </div>
                 <div className="flex flex-col">
                     <span className="font-semibold text-gray-900 text-sm sm:text-base">{agent?.name || 'Agent'}</span>
-                    <Link href="#" className="text-xs sm:text-sm text-yellow-600 font-medium hover:underline">View profile</Link>
+                    <Link href={`/profile/${FormatSlug(agent?.name || '')}`} className="text-xs sm:text-sm text-yellow-600 font-medium hover:underline">View profile</Link>
                 </div>
             </div>
         </div>

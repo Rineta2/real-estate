@@ -8,10 +8,11 @@ export interface PropertiesType {
   status: string;
   statusProject: string;
   author: {
-    name: string;
+    displayName: string;
     photoURL: string;
     role: string;
     uid: string;
+    name: string;
   };
   details: {
     id: string;
