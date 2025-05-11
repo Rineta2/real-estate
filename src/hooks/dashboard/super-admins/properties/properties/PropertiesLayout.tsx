@@ -1,17 +1,31 @@
 "use client"
+
 import React, { useState, useEffect } from 'react'
+
 import { IoIosArrowForward } from 'react-icons/io'
+
 import Link from 'next/link'
+
 import { FaPlus, FaEdit, FaTrash, FaEye } from 'react-icons/fa'
+
 import { usePropertiesData } from './lib/FetchProperties'
+
 import ContentModal from './modal/ContentModal'
+
 import DeleteModal from './modal/DeleteModal'
+
 import ViewModal from './modal/ViewModal'
+
 import { Properties } from './types/properties'
+
 import { format } from 'date-fns'
+
 import { Timestamp } from 'firebase/firestore'
+
 import { Pagination } from '@/base/helper/Pagination'
+
 import Image from 'next/image'
+
 import PropertiesSkelaton from './PropertiesSkelaton'
 
 export default function PropertiesLayout() {

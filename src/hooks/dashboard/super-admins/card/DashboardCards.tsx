@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { HiUsers, HiCurrencyDollar, HiHome, HiChartBar } from 'react-icons/hi';
+import { HiUsers, HiShieldCheck, HiUserGroup, HiUser } from 'react-icons/hi';
 
 interface DashboardCardProps {
     title: string;
@@ -34,11 +33,20 @@ const DashboardCard: React.FC<DashboardCardProps> = ({ title, value, icon, color
     );
 };
 
-export default function DashboardCards() {
+interface DashboardCardsProps {
+    userStats: {
+        total: number;
+        superAdmins: number;
+        admins: number;
+        regularUsers: number;
+    };
+}
+
+export default function DashboardCards({ userStats }: DashboardCardsProps) {
     const cards = [
         {
-            title: 'Total Users',
-            value: '2,543',
+            title: 'Total Accounts',
+            value: userStats.total,
             icon: <HiUsers className="w-6 h-6 text-primary-500" />,
             color: 'bg-gradient-to-r from-primary-50 to-primary-100',
             trend: {
@@ -47,33 +55,33 @@ export default function DashboardCards() {
             }
         },
         {
-            title: 'Revenue',
-            value: '$45,234',
-            icon: <HiCurrencyDollar className="w-6 h-6 text-secondary-500" />,
-            color: 'bg-gradient-to-r from-secondary-50 to-secondary-100',
+            title: 'Super Admins',
+            value: userStats.superAdmins,
+            icon: <HiShieldCheck className="w-6 h-6 text-indigo-500" />,
+            color: 'bg-gradient-to-r from-indigo-50 to-indigo-100',
             trend: {
                 value: 8.2,
                 isPositive: true
             }
         },
         {
-            title: 'Properties',
-            value: '1,234',
-            icon: <HiHome className="w-6 h-6 text-green-500" />,
-            color: 'bg-gradient-to-r from-green-50 to-green-100',
+            title: 'Admins',
+            value: userStats.admins,
+            icon: <HiUserGroup className="w-6 h-6 text-emerald-500" />,
+            color: 'bg-gradient-to-r from-emerald-50 to-emerald-100',
             trend: {
                 value: 5.1,
                 isPositive: true
             }
         },
         {
-            title: 'Conversion Rate',
-            value: '3.42%',
-            icon: <HiChartBar className="w-6 h-6 text-blue-500" />,
+            title: 'Regular Users',
+            value: userStats.regularUsers,
+            icon: <HiUser className="w-6 h-6 text-blue-500" />,
             color: 'bg-gradient-to-r from-blue-50 to-blue-100',
             trend: {
                 value: 2.4,
-                isPositive: false
+                isPositive: true
             }
         }
     ];
