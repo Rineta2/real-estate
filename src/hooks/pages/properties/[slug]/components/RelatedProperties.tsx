@@ -15,7 +15,7 @@ export default function relatedProperties({ relatedProperties, currentSlug }: Re
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Similar listings</h2>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
                     {relatedProperties.filter((item: PropertiesType) => item.slug !== currentSlug).map((item: PropertiesType) => (
-                        <Link href={`/blog/${item.slug}`} key={item.id} className="group">
+                        <Link href={`/properties/${item.slug}`} key={item.id} className="group">
                             <div className="bg-background rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300">
                                 <figure className="relative aspect-video overflow-hidden">
                                     <Image

@@ -12,7 +12,7 @@ export default function RelatedArticles({ relatedBlog, currentSlug }: RelatedBlo
     return (
         <div className='mt-16 sm:mt-20 md:mt-24'>
             <div className="flex flex-col gap-4">
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Related Articles</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Related Blogs</h2>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
                     {relatedBlog.filter(item => item.slug !== currentSlug).map((item) => (
                         <Link href={`/blog/${item.slug}`} key={item.id} className="group">
