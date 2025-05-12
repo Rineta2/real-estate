@@ -58,7 +58,7 @@ export default function Footer() {
                 {/* Copyright Section */}
                 <div className="mt-12 pt-8 border-t border-gray-100">
                     <p className="text-center text-sm text-gray-500 font-medium">
-                        © 2024{' '}
+                        © 2025{' '}
                         <a
                             href="https://spacedigitalia.my.id"
                             target="_blank"
